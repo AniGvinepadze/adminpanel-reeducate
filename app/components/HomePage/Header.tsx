@@ -13,6 +13,7 @@ export default function Header() {
             width={100}
             height={30}
             className="rounded-xl"
+            
           />
         </div>
         <div className="flex">

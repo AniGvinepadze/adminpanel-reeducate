@@ -73,14 +73,14 @@ export default function EditCoursePage() {
 
 
   return (
-    <div className="max-w-lg mx-auto p-6">
+    <div className=" bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 ">
       <h1 className="text-2xl font-bold mb-4">Edit Course</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {["name", "category", "link", "img"].map((field) => (
           <div key={field}>
             <label
               htmlFor={field}
-              className="block mb-1 font-medium capitalize"
+              className="block mb-1 font-medium capitalize p-1"
             >
               {field}
             </label>
@@ -89,13 +89,13 @@ export default function EditCoursePage() {
               name={field}
               value={(formData as any)[field]}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2"
+              className="w-full border text-gray-700 border-gray-300 rounded-xl px-3 py-2"
             />
           </div>
         ))}
         <button
           type="submit"
-          className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="mt-6 px-4 py-2 w-full my-2 bg-MainBg text-base font-medium text-white rounded-lg hover:bg-[#0f0f0f] hover:scale-105 transition-all ease-in-out duration-300"
         >
           Save Changes
         </button>

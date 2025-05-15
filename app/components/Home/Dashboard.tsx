@@ -86,14 +86,7 @@ export default function Dashboard() {
         </button>
       </div>
       {isAddModalOpen && (
-        <div
-          className="
-    max-w-[600px] w-full  absolute
-    left-1/2
-    translate-x-[-20%]
-  
-   "
-        >
+        <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">
           <DashboardPopup
             setIsAddModalOpen={setIsAddModalOpen}
             isAddModalOpen={isAddModalOpen}

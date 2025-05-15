@@ -81,7 +81,7 @@ export default function SignInFormFields() {
         <input
           type="text"
           placeholder="e.g. alex@email.com"
-          className={`px-3 py-[10px] w-full border rounded-lg focus:outline-none focus:ring-1 focus:ring-MainPurple focus:shadow-2xl ${
+          className={`px-3 py-[10px] w-full border rounded-lg text-gray-600 focus:outline-none focus:ring-1 focus:ring-MainPurple focus:shadow-2xl ${
             errors.email ? "input-error" : ""
           }`}
           {...register("email", {
@@ -105,11 +105,11 @@ export default function SignInFormFields() {
       </div>
       <div className="relative ">
         <p className="font-normal text-xs my-2  text-gray-200 ">Password</p>
-      
+
         <input
           type="text"
           placeholder="Enter your password"
-          className={` px-3 py-[10px] bg-gray-100  w-full border rounded-lg focus:outline-none focus:ring-1 focus:ring-MainPurple  focus:shadow-lg ${
+          className={` px-3 py-[10px] bg-gray-100  text-gray-600   w-full border rounded-lg focus:outline-none focus:ring-1 focus:ring-MainPurple  focus:shadow-lg ${
             errors.email ? "input-error" : ""
           }`}
           {...register("password", {
@@ -135,9 +135,6 @@ export default function SignInFormFields() {
         >
           Login
         </button>
-
-     
-       
       </div>
     </form>
   );

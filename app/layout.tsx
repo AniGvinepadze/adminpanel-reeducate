@@ -36,7 +36,7 @@ export default function RootLayout({
             <div className="max-w-[350px] w-full bg-DarkGrey shadow-lg rounded-xl p-7 ">
               <SideBar />
             </div>
-            <div className="max-w-[1000px] w-full">{children}</div>
+            <div className="max-w-[1000px] w-full ">{children}</div>
           </div>
         </div>
       </body>

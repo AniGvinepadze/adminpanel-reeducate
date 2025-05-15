@@ -12,12 +12,12 @@ export default function Header() {
             alt="logo"
             width={100}
             height={30}
-            className="rounded-xl"
-            
+            className="rounded-xl max-600:max-w-[70px]"
+
           />
         </div>
         <div className="flex">
-            <button className="bg-[#151515] text-[#F5F5F5] flex items-center px-7 rounded-xl border-2 border-[#151515] hover:bg-transparent transition-all ease-in-out duration-300 hover:scale-105">Log Out</button>
+            <button className="bg-[#151515] text-[#F5F5F5] text-base font-medium flex items-center px-7 rounded-xl border-2 border-[#151515] hover:bg-transparent transition-all ease-in-out duration-300 hover:scale-105 max-400:px-4 ">Log Out</button>
         </div>
       </div>
     </div>

@@ -9,8 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        MainBg:'#151515',
+        DarkGrey:"#212121",
+        
       },
       screens: {
         "max-1400": { max: "1400px" },

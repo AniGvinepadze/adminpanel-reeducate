@@ -15,7 +15,7 @@ type Course = {
 
 export default function EditCoursePage() {
   const router = useRouter();
-  const pathname = usePathname(); // e.g. "/courses/123"
+  const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
 
   const [course, setCourse] = useState<Course | null>(null);
@@ -73,7 +73,7 @@ export default function EditCoursePage() {
 
 
   return (
-    <div className=" bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 ">
+    <div className=" bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-700:p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Course</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         {["name", "category", "link", "img"].map((field) => (

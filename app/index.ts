@@ -33,7 +33,7 @@ export const sideBar = [
 
   {
     id: 6,
-    title: "ხშირად დასმული კითხვები",
+    title: "კითხვები",
     route: "/faq",
   },
   {

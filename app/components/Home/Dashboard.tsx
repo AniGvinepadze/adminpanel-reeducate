@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import DashboardPopup from "./DashboardPopup";
 import Image from "next/image";
 import { deleteIcon } from "@/app/assets";
+import EditCoursePage from "@/app/(pages)/courses/[id]/page";
+
+import { useRouter } from "next/navigation";
 
 export type Courses = {
   _id: string;
@@ -51,6 +54,23 @@ export default function Dashboard() {
     }
   };
 
+  const handleUpdate = async (id: string, updatedData: Partial<Courses>) => {
+    try {
+      const response = await axiosInstance.put(`/courses/${id}`, updatedData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCourses((prev) =>
+        prev.map((course) => (course._id === id ? response.data : course))
+      );
+    } catch (error) {
+      console.error("Failed to update course:", error);
+    }
+  };
+  const router = useRouter();
+
   return (
     <div className=" bg-DarkGrey h-[600px] w-full rounded-xl shadow-lg p-7 ">
       <div className="w-full max-w-[1000px] flex justify-end p-3 relative">
@@ -88,8 +108,17 @@ export default function Dashboard() {
             <p className="text-base font-medium">{el.img}</p>
             <p className="text-base font-medium">{el.link}</p>
           </div>
-          <button className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all" onClick={()=>handleDelete(el._id)}>
+          <button
+            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            onClick={() => handleDelete(el._id)}
+          >
             Delete
+          </button>
+          <button
+            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            onClick={() => router.push(`/courses/${el._id}`)}
+          >
+            Edit
           </button>
         </div>
       ))}

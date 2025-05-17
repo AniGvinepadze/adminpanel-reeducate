@@ -25,9 +25,11 @@ export default function DashboardPopup({
     img: "",
     category: "",
   });
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const router = useRouter();
+  const modalRef = useRef<HTMLDivElement>(null);
 
+  const token = getCookie("accessToken") as string;
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -48,32 +50,6 @@ export default function DashboardPopup({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isAddModalOpen]);
-
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const token = getCookie("accessToken") as string;
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const response = await axiosInstance.post("/courses", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setCourses((prev) => [...prev, response.data]);
-      setIsAddModalOpen(false);
-    } catch (error) {}
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   useEffect(() => {
     const getCurrentUser = async () => {
       if (!token || !router) return;
@@ -89,6 +65,35 @@ export default function DashboardPopup({
 
     getCurrentUser();
   }, [token, router]);
+
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      cosnt data =new 
+
+
+
+
+      const response = await axiosInstance.post("/courses", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCourses((prev) => [...prev, response.data]);
+      setIsAddModalOpen(false);
+    } catch (error) {}
+  };
 
   return (
     <div>

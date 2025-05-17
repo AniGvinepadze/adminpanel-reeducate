@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 export type Courses = {
   _id: string;
   name: string;
-  img: string;
+  images: string[];
   category: string;
   link: string;
 };
@@ -101,7 +101,18 @@ export default function Dashboard() {
           <div className="w-full bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-10 my-3">
             <p className="text-base font-medium">{el.name}</p>
             <p className="text-base font-medium">{el.category}</p>
-            <p className="text-base font-medium">{el.img}</p>
+            {el.images && el.images.length > 0 ? (
+              <Image
+              
+                 src={'/' + el.images[0]} 
+                alt={el.name}
+                width={100}
+                height={60}
+                className="object-cover rounded"
+              />
+            ) : (
+              <p>No image</p>
+            )}
             <p className="text-base font-medium">{el.link}</p>
           </div>
           <button

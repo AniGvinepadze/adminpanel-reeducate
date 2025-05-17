@@ -22,7 +22,7 @@ export default function DashboardPopup({
   const [formData, setFormData] = useState({
     name: "",
     link: "",
-    img: "",
+    images: [],
     category: "",
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -66,6 +66,11 @@ export default function DashboardPopup({
     getCurrentUser();
   }, [token, router]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -75,17 +80,20 @@ export default function DashboardPopup({
     }));
   };
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      cosnt data =new 
+      const data = new FormData();
+      data.append("name", formData.name);
+      data.append("link", formData.link);
+      data.append("category", formData.category);
 
+      if (selectedFile) {
+        data.append("img", selectedFile);
+      }
 
-
-
-      const response = await axiosInstance.post("/courses", formData, {
+      const response = await axiosInstance.post("/courses", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -143,7 +151,7 @@ export default function DashboardPopup({
           </div>
 
           <div>
-            <label htmlFor="img" className="block text-sm font-medium">
+            <label htmlFor="images" className="block text-sm font-medium">
               Link
             </label>
             <input
@@ -157,15 +165,15 @@ export default function DashboardPopup({
             />
           </div>
           <div>
-            <label htmlFor="img" className="block text-sm font-medium">
+            <label htmlFor="images" className="block text-sm font-medium">
               Upload Image
             </label>
             <input
-              id="img"
-              name="img"
-              value={formData.img}
-              onChange={handleChange}
-              type="text"
+              id="images"
+              name="images"
+              onChange={handleFileChange}
+              type="file"
+              accept="image/*"
               placeholder="Upload image"
               className="mt-1 block w-full border  text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black  sm:text-sm p-2"
             />

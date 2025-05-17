@@ -54,6 +54,10 @@ export default function Dashboard() {
     }
   };
 
+  const getFullImageUrl = (imgPath: string) => {
+    if (imgPath.startsWith("http")) return imgPath;
+    return `https://your-bucket-name.s3.amazonaws.com/${imgPath}`;
+  };
   const handleUpdate = async (id: string, updatedData: Partial<Courses>) => {
     try {
       const response = await axiosInstance.put(`/courses/${id}`, updatedData, {
@@ -103,8 +107,7 @@ export default function Dashboard() {
             <p className="text-base font-medium">{el.category}</p>
             {el.images && el.images.length > 0 ? (
               <Image
-              
-                 src={'/' + el.images[0]} 
+                src={getFullImageUrl(el.images[0])}
                 alt={el.name}
                 width={100}
                 height={60}

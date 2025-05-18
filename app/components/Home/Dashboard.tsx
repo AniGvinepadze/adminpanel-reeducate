@@ -107,7 +107,7 @@ export default function Dashboard() {
             <p className="text-base font-medium">{el.category}</p>
             {el.images && el.images.length > 0 ? (
               <Image
-                src={getFullImageUrl(el.images[0])}
+                src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
                 alt={el.name}
                 width={100}
                 height={60}

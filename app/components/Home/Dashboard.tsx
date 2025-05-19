@@ -109,9 +109,9 @@ export default function Dashboard() {
               <Image
                 src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
                 alt={el.name}
-                width={100}
-                height={60}
-                className="object-cover rounded"
+                width={80}
+                height={30}
+                className="object-cover rounded max-h-[25px]"
               />
             ) : (
               <p>No image</p>

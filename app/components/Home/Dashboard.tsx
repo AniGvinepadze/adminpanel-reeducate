@@ -79,14 +79,14 @@ export default function Dashboard() {
     <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 ">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
-          <h1 className="text-2xl font-bold mb-4">Courses</h1>
+          <h1 className="text-2xl font-bold mb-4">კურსები</h1>
         </div>
         <button
           className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium
           "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-          + add
+          + დამატება
         </button>
       </div>
       {isAddModalOpen && (

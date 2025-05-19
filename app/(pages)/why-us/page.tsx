@@ -83,7 +83,7 @@ export default function page() {
           </button>
           <button
             className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
-            onClick={() => router.push(`/courses/${el._id}`)}
+            onClick={() => router.push(`/why-us/${el._id}`)}
           >
             Edit
           </button>

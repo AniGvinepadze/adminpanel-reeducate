@@ -1,31 +1,33 @@
 "use client";
 import { AboutUs } from "@/app/(pages)/about-us/page";
+import { Feedback } from "@/app/(pages)/feedback/page";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
-type AboutUsPopupProps = {
+type FeedbackPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isAddModalOpen: boolean;
-  aboutUs: AboutUs[];
-  setAboutUs: React.Dispatch<React.SetStateAction<AboutUs[]>>;
+  feedback: Feedback[];
+  setFeedback: React.Dispatch<React.SetStateAction<Feedback[]>>;
 };
 
-export default function AboutUsPopup({
+export default function FeedbackPopup({
   setIsAddModalOpen,
   isAddModalOpen,
-  aboutUs,
-  setAboutUs,
-}: AboutUsPopupProps) {
+  feedback,
+  setFeedback,
+}: FeedbackPopupProps) {
   const [user, setUser] = useState();
   const [formData, setFormData] = useState({
-    title: "",
+    user: {
+      fullName: "",
+      category: "",
+    },
     description: "",
-    images: [],
   });
 
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -66,41 +68,39 @@ export default function AboutUsPopup({
     getCurrentUser();
   }, [token, router]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedFile(e.target.files[0]);
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    if (name in formData.user) {
+      setFormData((prev) => ({
+        ...prev,
+        user: {
+          ...prev.user,
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const data = new FormData();
-      data.append("title", formData.title);
-      data.append("description", formData.description);
-
-      if (selectedFile) {
-        data.append("img", selectedFile);
-      }
-
-      const response = await axiosInstance.post("/about-us", data, {
+      const response = await axiosInstance.post("/feedback", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setAboutUs((prev) => [...prev, response.data]);
+      setFeedback((prev) => [...prev, response.data]);
       setIsAddModalOpen(false);
     } catch (error) {}
   };
+
   return (
     <div>
       <div
@@ -113,29 +113,46 @@ export default function AboutUsPopup({
             onClick={() => setIsAddModalOpen(false)}
             className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
           >
-            +  
+            +
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium">
-              Title
+            <label htmlFor="fullName" className="block text-sm font-medium">
+              Full Name
             </label>
             <input
-              id="title"
-              name="title"
-              value={formData.title}
+              id="fullName"
+              name="fullName"
+              value={formData.user.fullName}
               onChange={handleChange}
               type="text"
-              placeholder="Enter course name"
-              className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
+              placeholder="Enter full name"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            />
+          </div>
+
+     
+
+          <div>
+            <label htmlFor="category" className="block text-sm font-medium">
+              Category
+            </label>
+            <input
+              id="category"
+              name="category"
+              value={formData.user.category}
+              onChange={handleChange}
+              type="text"
+              placeholder="Enter category"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
             />
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm font-medium ">
-            Description
+            <label htmlFor="description" className="block text-sm font-medium">
+              Description
             </label>
             <input
               id="description"
@@ -143,24 +160,8 @@ export default function AboutUsPopup({
               value={formData.description}
               onChange={handleChange}
               type="text"
-              placeholder="add description"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black text-gray-700 sm:text-sm p-2"
-            />
-          </div>
-
-         
-          <div>
-            <label htmlFor="images" className="block text-sm font-medium">
-              Upload Image
-            </label>
-            <input
-              id="images"
-              name="images"
-              onChange={handleFileChange}
-              type="file"
-              accept="image/*"
-              placeholder="Upload image"
-              className="mt-1 block w-full border  text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black  sm:text-sm p-2"
+              placeholder="Add description"
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
             />
           </div>
 
@@ -169,7 +170,7 @@ export default function AboutUsPopup({
               type="submit"
               className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
             >
-              Add About Us
+              Add Feedback
             </button>
           </div>
         </form>

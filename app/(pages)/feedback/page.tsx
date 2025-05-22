@@ -1,26 +1,27 @@
 "use client";
 
-import AboutUsPopup from "@/app/common/popups/AboutUsPopup";
+import FeedbackPopup from "@/app/common/popups/FeedbackPopup";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-export type Admin = {
+export type User = {
   fullName: string;
   email: string;
+  category: string;
 };
 
 export type Feedback = {
   _id: string;
 
-  user: Admin[];
+  user: User[];
   description: string;
 };
 
 export default function page() {
-  const [user, setUser] = useState<Admin | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const [feedback, setFeedback] = useState<Feedback[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -95,12 +96,12 @@ export default function page() {
       </div>
       {isAddModalOpen && (
         <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">
-          {/* <AboutUsPopup
+          <FeedbackPopup
             setIsAddModalOpen={setIsAddModalOpen}
             isAddModalOpen={isAddModalOpen}
-            aboutUs={aboutUs}
-            setAboutUs={setAboutUs}
-          /> */}
+            feedback={feedback}
+            setFeedback={setFeedback}
+          />
         </div>
       )}
 
@@ -108,9 +109,14 @@ export default function page() {
         <div key={el._id} className="flex justify-between gap-3">
           <div className="w-full bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-10 my-3">
             <p className="text-base font-medium">{el.description}</p>
-            <p className="text-base font-medium">
-              {el.user.map((u) => u.fullName)}
-            </p>
+            <div className="text-base font-medium">
+              {el.user.map((u, index) => (
+                <div key={index}>
+                  <p>{u.fullName}</p>
+                  <p>{u.category}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <button
             className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"

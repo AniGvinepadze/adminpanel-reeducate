@@ -1,27 +1,26 @@
 "use client";
 import { AboutUs } from "@/app/(pages)/about-us/page";
+import { Partners } from "@/app/(pages)/partners/page";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
-type AboutUsPopupProps = {
+type PartnerPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isAddModalOpen: boolean;
-  aboutUs: AboutUs[];
-  setAboutUs: React.Dispatch<React.SetStateAction<AboutUs[]>>;
+  partner: Partners[];
+  setPartner: React.Dispatch<React.SetStateAction<Partners[]>>;
 };
 
-export default function AboutUsPopup({
+export default function PartnerPopup({
   setIsAddModalOpen,
   isAddModalOpen,
-  aboutUs,
-  setAboutUs,
-}: AboutUsPopupProps) {
+  partner,
+  setPartner,
+}: PartnerPopupProps) {
   const [user, setUser] = useState();
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
     images: [],
   });
 
@@ -85,19 +84,17 @@ export default function AboutUsPopup({
 
     try {
       const data = new FormData();
-      data.append("title", formData.title);
-      data.append("description", formData.description);
 
       if (selectedFile) {
         data.append("img", selectedFile);
       }
 
-      const response = await axiosInstance.post("/about-us", data, {
+      const response = await axiosInstance.post("/partners", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setAboutUs((prev) => [...prev, response.data]);
+      setPartner((prev) => [...prev, response.data]);
       setIsAddModalOpen(false);
     } catch (error) {}
   };
@@ -118,36 +115,7 @@ export default function AboutUsPopup({
         </div>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium">
-              Title
-            </label>
-            <input
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter course name"
-              className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="description" className="block text-sm font-medium ">
-            Description
-            </label>
-            <input
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              type="text"
-              placeholder="add description"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black text-gray-700 sm:text-sm p-2"
-            />
-          </div>
-
+      
          
           <div>
             <label htmlFor="images" className="block text-sm font-medium">

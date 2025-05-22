@@ -105,7 +105,7 @@ export default function PartnerPopup({
         className="bg-[#535353] shadow-xl  rounded-lg  w-[560px] p-6"
       >
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Add New About Us Content</h2>
+          <h2 className="text-xl font-bold">Add New Partner</h2>
           <button
             onClick={() => setIsAddModalOpen(false)}
             className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
@@ -137,7 +137,7 @@ export default function PartnerPopup({
               type="submit"
               className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
             >
-              Add About Us
+              Add Partner
             </button>
           </div>
         </form>

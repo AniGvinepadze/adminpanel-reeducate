@@ -21,13 +21,14 @@ export type Feedback = {
 };
 
 export default function page() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState();
 
   const [feedback, setFeedback] = useState<Feedback[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const token = getCookie("accessToken") as string;
 
   const router = useRouter();
+  
 
   useEffect(() => {
     if (!token) {

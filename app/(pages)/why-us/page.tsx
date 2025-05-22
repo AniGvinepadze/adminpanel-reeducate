@@ -11,10 +11,23 @@ export type WhyUs = {
   description: string;
 };
 export default function page() {
+  const [user, setUser] = useState();
   const [whyUs, setWhyUs] = useState<WhyUs[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const token = getCookie("accessToken") as string;
 
+  const getCurrentUser = async (token: string) => {
+    try {
+      const response = await axiosInstance.get("/auth/current-admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+    } catch (error) {
+      router.push("/sign-in");
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,7 +41,9 @@ export default function page() {
         console.log("error fertchong courses");
       }
     };
+
     fetchData();
+    getCurrentUser(token as string);
   }, []);
   const handleDelete = async (id: string) => {
     try {

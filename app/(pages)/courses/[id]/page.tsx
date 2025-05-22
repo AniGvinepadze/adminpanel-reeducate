@@ -18,6 +18,7 @@ export default function EditCoursePage() {
   const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
 
+  const [user,setUser] = useState()
   const [course, setCourse] = useState<Course | null>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +28,22 @@ export default function EditCoursePage() {
   });
   const token = getCookie("accessToken") as string;
 
+  const getCurrentUser = async (token: string) => {
+    try {
+      const response = await axiosInstance.get("/auth/current-admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+
+
+    } catch (error) {
+      router.push("/sign-in");
+    }
+  };
   useEffect(() => {
+       
     async function fetchCourse() {
       try {
         const response = await axiosInstance.get(`/courses/${id}`, {
@@ -40,12 +56,14 @@ export default function EditCoursePage() {
           link: response.data.link,
           img: response.data.img,
         });
+
       } catch (error) {
         console.error("Failed to load course", error);
       }
     }
 
     fetchCourse();
+    getCurrentUser(token as string)
   }, [id, token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -76,17 +76,18 @@ export default function Dashboard() {
   const router = useRouter();
 
   return (
-    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 ">
-      <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
+    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-450:p-3">
+      <div className="w-full max-w-[1000px] flex justify-between p-3 relative max-400:">
         <div>
           <h1 className="text-2xl font-bold mb-4">კურსები</h1>
         </div>
         <button
-          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium
+          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-400:py-1
           "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-          + დამატება
+         <p className="max-400: text-2xl">+</p>
+         <p className="max-400:hidden">დამატება</p>
         </button>
       </div>
       {isAddModalOpen && (
@@ -102,35 +103,42 @@ export default function Dashboard() {
 
       {courses.map((el) => (
         <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
-          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex  gap-6 p-3">
-            <div className="flex-shrink-0 h-full">
+          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-600:gap-2 max-550:flex-col">
+            <div className="flex-shrink-0 h-full overflow-hidden">
               {el.images && el.images.length > 0 ? (
-                       <div className=" h-full w-[250px] rounded overflow-hidden">
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
-                  alt={el.name}
-                  width={250}
-                  height={150}
-                  className="object-cover rounded-xl min-h-[250px] "
-                />
-                
+                <div className="h-full max-w-[450px] w-full rounded">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
+                    alt={el.name}
+                    width={410}
+                    height={150}
+                    className="object-cover rounded-md min-h-[250px] max-w-[250px] 
+            max-550:max-w-[410px] max-550:max-h-[150px]"
+                  />
                 </div>
               ) : (
                 <p>No image</p>
               )}
             </div>
-            <div className="max-w-[900px] w-full p-3 ">
-              <div className="w-full max-w-[800px] -mt-5">
-                 <p className="p-2 font-medium text-sm">Name</p>
-                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">{el.name}</p>
+
+            <div className="max-w-[900px] w-full p-3 max-600:p-0">
+              <div className="w-full max-w-[800px] -mt-5 max-600:mt-0">
+                <p className="p-2 font-medium text-sm">Name</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                  {el.name}
+                </p>
               </div>
-                 <div className="w-full max-w-[800px] ">
-                 <p className="p-2 font-medium text-sm">Category</p>
-                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">{el.category}</p>
+              <div className="w-full max-w-[800px] ">
+                <p className="p-2 font-medium text-sm">Category</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                  {el.category}
+                </p>
               </div>
-        <div className="w-full max-w-[800px] ">
-                 <p className="p-2 font-medium text-sm">Link</p>
-                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">{el.link}</p>
+              <div className="w-full max-w-[800px] ">
+                <p className="p-2 font-medium text-sm">Link</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                  {el.link}
+                </p>
               </div>
             </div>
           </div>

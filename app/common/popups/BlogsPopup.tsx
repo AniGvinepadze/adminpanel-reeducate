@@ -94,7 +94,7 @@ export default function BlogsPopup({
         className="bg-[#535353] shadow-xl  rounded-lg  w-[560px] p-6"
       >
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Add New Course</h2>
+          <h2 className="text-xl font-bold">Add New Blog</h2>
           <button
             onClick={() => setIsAddModalOpen(false)}
             className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
@@ -132,7 +132,7 @@ export default function BlogsPopup({
               className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
             />
              <div>
-            <label htmlFor="description" className="block text-sm font-medium">
+            <label htmlFor="description" className="block text-sm font-medium mt-4">
               Description
             </label>
             <input
@@ -154,7 +154,7 @@ export default function BlogsPopup({
               type="submit"
               className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
             >
-              Add Course
+              Add Blog
             </button>
           </div>
           </div>

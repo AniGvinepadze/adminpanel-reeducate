@@ -101,31 +101,47 @@ export default function Dashboard() {
       )}
 
       {courses.map((el) => (
-        <div key={el._id} className="flex justify-between gap-3">
-          <div className="w-full bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-10 my-3">
-            <p className="text-base font-medium">{el.name}</p>
-            <p className="text-base font-medium">{el.category}</p>
-            {el.images && el.images.length > 0 ? (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
-                alt={el.name}
-                width={80}
-                height={30}
-                className="object-cover rounded max-h-[25px]"
-              />
-            ) : (
-              <p>No image</p>
-            )}
-            <p className="text-base font-medium">{el.link}</p>
+        <div key={el._id} className="max-w-[1000px] w-full mb-10">
+          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex  gap-6 p-3">
+            <div className="flex-shrink-0 h-full">
+              {el.images && el.images.length > 0 ? (
+                       <div className=" h-full w-[250px] rounded overflow-hidden">
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
+                  alt={el.name}
+                  width={250}
+                  height={150}
+                  className="object-cover rounded-xl min-h-[250px] "
+                />
+                
+                </div>
+              ) : (
+                <p>No image</p>
+              )}
+            </div>
+            <div className="max-w-[900px] w-full p-3 ">
+              <div className="w-full max-w-[800px] -mt-5">
+                 <p className="p-2 font-medium text-sm">Name</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">{el.name}</p>
+              </div>
+                 <div className="w-full max-w-[800px] ">
+                 <p className="p-2 font-medium text-sm">Category</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">{el.category}</p>
+              </div>
+        <div className="w-full max-w-[800px] ">
+                 <p className="p-2 font-medium text-sm">Link</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">{el.link}</p>
+              </div>
+            </div>
           </div>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
             onClick={() => handleDelete(el._id)}
           >
             Delete
           </button>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
             onClick={() => router.push(`/courses/${el._id}`)}
           >
             Edit

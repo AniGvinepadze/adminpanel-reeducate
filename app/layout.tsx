@@ -34,7 +34,7 @@ export default function RootLayout({
           <Header />
           <div className="flex justify-between my-10 gap-5 max-700:flex-col">
             <div
-              className="  max-w-[350px] w-full bg-DarkGrey shadow-lg rounded-xl p-7 max-1000:max-w-[250px]  max-700:max-w-full max-700:p-3 sticky top-0 max-h-[800px] overflow-y-auto custom-scrollbar"
+              className=" max-w-[350px] w-full bg-DarkGrey shadow-lg rounded-xl p-7 max-1000:max-w-[250px]  max-700:max-w-full max-700:p-3 sticky top-0 max-h-[800px] overflow-y-auto custom-scrollbar"
             >
               <SideBar />
             </div>

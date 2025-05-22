@@ -4,8 +4,8 @@ import React from "react";
 
 export default function SideBar() {
   return (
-    <div className="max-w-[350px] w-full  max-700:max-w-full">
-      <div className="grid grid-cols-1 items-center max-700:grid-cols-3 gap-1 max-500:grid-cols-2">
+    <div className="max-w-[350px] w-full  max-800:max-w-full">
+      <div className="grid grid-cols-1 items-center max-800:grid-cols-4 gap-1 max-500:grid-cols-2">
         {sideBar.map((el) => (
           <Link
             href={el.route}

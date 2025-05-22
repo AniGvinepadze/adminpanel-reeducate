@@ -101,7 +101,7 @@ export default function Dashboard() {
       )}
 
       {courses.map((el) => (
-        <div key={el._id} className="max-w-[1000px] w-full mb-10">
+        <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
           <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex  gap-6 p-3">
             <div className="flex-shrink-0 h-full">
               {el.images && el.images.length > 0 ? (

@@ -1,4 +1,5 @@
 "use client";
+import BlogsPopup from "@/app/common/popups/BlogsPopup";
 import WhyUsPopup from "@/app/common/popups/WhyUsPopup";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
@@ -61,21 +62,23 @@ export default function page() {
         >
           + დამატება
         </button>
-        {/* {isAddModalOpen && (
+        {isAddModalOpen && (
           <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">
-            <WhyUsPopup
+            <BlogsPopup
               setIsAddModalOpen={setIsAddModalOpen}
               isAddModalOpen={isAddModalOpen}
-              whyUs={whyUs}
-              setWhyUs={setWhyUs}
+              blog={blog}
+              setBlog={setBlog}
             />
           </div>
-        )} */}
+        )}
       </div>
       {blog.map((el) => (
         <div key={el._id} className="flex justify-between gap-3">
           <div className="w-full bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-10 my-3">
             <p className="text-base font-medium">{el.description}</p>
+            <p className="text-base font-medium">{el.link}</p>
+            <p className="text-base font-medium">{el.title}</p>
           </div>
           <button
             className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
@@ -85,7 +88,7 @@ export default function page() {
           </button>
           <button
             className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
-            onClick={() => router.push(`/why-us/${el._id}`)}
+            onClick={() => router.push(`/blog/${el._id}`)}
           >
             Edit
           </button>

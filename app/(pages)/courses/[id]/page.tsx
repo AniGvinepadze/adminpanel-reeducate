@@ -85,7 +85,7 @@ export default function EditCoursePage() {
           "Content-Type": "multipart/form-data",
         },
       });
-      // Assuming response.data.img contains the uploaded image URL/path
+   
       setFormData((prev) => ({ ...prev, img: response.data.img }));
     } catch (error) {
       console.error("Failed to upload image", error);
@@ -129,7 +129,7 @@ export default function EditCoursePage() {
           </div>
         ))}
 
-        {/* Image Upload */}
+
         <div>
           <label
             htmlFor="image"

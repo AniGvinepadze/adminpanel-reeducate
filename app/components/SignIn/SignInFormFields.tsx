@@ -43,9 +43,11 @@ export default function SignInFormFields() {
   useEffect(() => {
     const token = searchParams.get("token");
     if (token) {
-      getCurrentUser(token);
-      setCookie("accessToken", token, { maxAge: 60 * 60 });
-      router.push("/");
+      (async () => {
+        await getCurrentUser(token);
+        setCookie("accessToken", token, { maxAge: 60 * 60 });
+        router.push("/");
+      })();
     }
   }, [searchParams]);
 

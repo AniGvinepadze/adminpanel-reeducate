@@ -76,7 +76,7 @@ export default function page() {
     <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7  max-500:p-3">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
-          <h1 className="text-2xl font-bold mb-4">პარტნიორები</h1>
+          <h1 className="text-2xl font-bold mb-4 max-400:text-xl">პარტნიორები</h1>
         </div>
         <button
           className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-500:py-1 max-400:px-4
@@ -97,40 +97,41 @@ export default function page() {
           />
         </div>
       )}
-     <div className="grid grid-cols-3">
-      {partner.map((el) => (
-        <div key={el._id} className="flex flex-col gap-1 max-w-[275px] ">
-          <div className=" bg-MainBg rounded-xl flex justify-between gap-4 p-3 my-3">
-            {el.images && el.images.length > 0 ? (
-              <div className="h-full max-w-[450px] w-full rounded">
-                <Image
-                  src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
-                  alt="image"
-                  width={410}
-                  height={250}
-                  className="object-cover rounded-md min-h-[250px] max-w-[250px] max-1100:max-w-[190px] 
-                       max-550:max-w-[410px] max-550:max-h-[150px] "
-                />
+      <div className="max-450:flex max-450:justify-center">
+        <div className="grid grid-cols-3 gap-3 max-1050:grid-cols-2 max-450:grid-cols-1 ">
+          {partner.map((el) => (
+            <div key={el._id} className="flex flex-col gap-1 max-w-[275px] ">
+              <div className=" bg-MainBg rounded-xl flex justify-between gap-4 p-3 my-3">
+                {el.images && el.images.length > 0 ? (
+                  <div className="h-full max-w-[450px] w-full rounded">
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
+                      alt="image"
+                      width={250}
+                      height={250}
+                      className="object-cover rounded-md min-h-[250px] max-w-[250px] w-full  "
+                    />
+                  </div>
+                ) : (
+                  <p>No image</p>
+                )}
               </div>
-            ) : (
-              <p>No image</p>
-            )}
-          </div>
 
-          <button
-            className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6  hover:scale-110 ease-in-out duration-300 transition-all"
-            onClick={() => handleDelete(el._id)}
-          >
-            Delete
-          </button>
-          <button
-            className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6 my-2 hover:scale-110 ease-in-out duration-300 transition-all"
-            onClick={() => router.push(`/partners/${el._id}`)}
-          >
-            Edit
-          </button>
+              <button
+                className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6  hover:scale-110 ease-in-out duration-300 transition-all"
+                onClick={() => handleDelete(el._id)}
+              >
+                Delete
+              </button>
+              <button
+                className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6 my-2 hover:scale-110 ease-in-out duration-300 transition-all"
+                onClick={() => router.push(`/partners/${el._id}`)}
+              >
+                Edit
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
       </div>
     </div>
   );

@@ -50,17 +50,18 @@ export default function page() {
   const router = useRouter();
 
   return (
-    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 ">
+    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-500:p-3">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
-          <h1 className="text-2xl font-bold mb-4">ბლოგები</h1>
+          <h1 className="text-2xl font-bold mb-4 max-400:text-xl ">ბლოგები</h1>
         </div>
         <button
-          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium
+          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-500:py-1 max-350:px-4
           "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-          + დამატება
+          <p className="max-500: text-2xl max-350:text-lg">+</p>
+          <p className="max-500:hidden mt-1">დამატება</p>
         </button>
         {isAddModalOpen && (
           <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">
@@ -74,21 +75,38 @@ export default function page() {
         )}
       </div>
       {blog.map((el) => (
-        <div key={el._id} className="flex justify-between gap-3">
-          <div className="w-full bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-10 my-3">
-            <p className="text-base font-medium">{el.description}</p>
-            <p className="text-base font-medium">{el.link}</p>
-            <p className="text-base font-medium">{el.title}</p>
+        <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
+          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-1100:gap-2 max-550:flex-col">
+            <div className=" w-full py-3 px-3 max-950:px-0">
+              <div className="w-full max-w-[1000px">
+                <p className="p-2 font-medium text-sm">Title</p>
+                <p className="text-base font-medium w-full bg-DarkGrey  p-2 rounded-xl">
+                  {el.title}
+                </p>
+              </div>
+              <div className="w-full m my-4">
+                <p className="p-2 font-medium text-sm">Description</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[1000px] p-2 rounded-xl">
+                  {el.description}
+                </p>
+              </div>
+              <div className="w-full max-w-[1000px]">
+                <p className="p-2 font-medium text-sm">Link</p>
+                <p className="text-base font-medium w-full bg-DarkGrey  p-2 rounded-xl">
+                  {el.link}
+                </p>
+              </div>
+            </div>
           </div>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
             onClick={() => handleDelete(el._id)}
           >
             Delete
           </button>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
-            onClick={() => router.push(`/blog/${el._id}`)}
+            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+            onClick={() => router.push(`/courses/${el._id}`)}
           >
             Edit
           </button>

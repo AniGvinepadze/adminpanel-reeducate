@@ -14,11 +14,35 @@ export type Blogs = {
   link: string;
 };
 export default function page() {
+    const [user, setUser] = useState();
   const [blog, setBlog] = useState<Blogs[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const token = getCookie("accessToken") as string;
 
+  
+      
+
   useEffect(() => {
+       if (!token) {
+          router.push("/sign-in");
+          return;
+        }
+    
+        const getCurrentUser = async () => {
+          try {
+            const response = await axiosInstance.get("/auth/current-admin", {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log("Current user:", response.data);
+            setUser(response.data);
+          } catch (err: any) {
+            console.error(
+              "Failed to get current admin:",
+              err.response || err.message || err
+            );
+            router.push("/sign-in");
+          }
+        };
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get("/blogs", {
@@ -31,6 +55,7 @@ export default function page() {
         console.log("error fertchong courses");
       }
     };
+    getCurrentUser()
     fetchData();
   }, []);
   const handleDelete = async (id: string) => {

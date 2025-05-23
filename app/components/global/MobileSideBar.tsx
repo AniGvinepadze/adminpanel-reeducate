@@ -18,7 +18,7 @@ export default function MobileSidebar({ isOpen, setIsOpen }:MobileSidebarProps) 
       )}
 
       <div
-        className={`fixed top-0 left-0 h-full max-w-[350px] w-full rounded-xl bg-MainBg shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 h-full max-w-[350px] w-full rounded-xl bg-MainBg shadow-lg z-50 transform transition-transform duration-1000 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

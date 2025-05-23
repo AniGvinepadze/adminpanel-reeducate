@@ -87,7 +87,7 @@ export default function Dashboard() {
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
          <p className="max-400: text-2xl">+</p>
-         <p className="max-400:hidden">დამატება</p>
+         <p className="max-400:hidden mt-1">დამატება</p>
         </button>
       </div>
       {isAddModalOpen && (

@@ -73,7 +73,7 @@ export default function page() {
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
          <p className="max-500: text-2xl max-400:text-lg">+</p>
-         <p className="max-500:hidden">დამატება</p>
+         <p className="max-500:hidden mt-1">დამატება</p>
         </button>
         {isAddModalOpen && (
           <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">

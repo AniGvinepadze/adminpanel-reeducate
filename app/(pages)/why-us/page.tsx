@@ -68,11 +68,11 @@ export default function page() {
           <h1 className="text-2xl font-bold mb-4 max-350:text-xl">რატომ ჩვენ</h1>
         </div>
         <button
-          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-500:py-1
+          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-500:py-1 max-400:px-4
           "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-         <p className="max-500: text-2xl">+</p>
+         <p className="max-500: text-2xl max-400:text-lg">+</p>
          <p className="max-500:hidden">დამატება</p>
         </button>
         {isAddModalOpen && (

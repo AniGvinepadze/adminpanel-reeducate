@@ -62,17 +62,18 @@ export default function page() {
   const router = useRouter();
 
   return (
-    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 ">
+    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-500:p-3">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
-          <h1 className="text-2xl font-bold mb-4">რატომ ჩვენ</h1>
+          <h1 className="text-2xl font-bold mb-4 max-350:text-xl">რატომ ჩვენ</h1>
         </div>
         <button
-          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium
+          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-500:py-1
           "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-          + დამატება
+         <p className="max-500: text-2xl">+</p>
+         <p className="max-500:hidden">დამატება</p>
         </button>
         {isAddModalOpen && (
           <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">

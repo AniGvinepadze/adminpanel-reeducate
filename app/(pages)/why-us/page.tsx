@@ -86,18 +86,21 @@ export default function page() {
         )}
       </div>
       {whyUs.map((el) => (
-        <div key={el._id} className="flex justify-between gap-3">
-          <div className="w-full bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-10 my-3">
-            <p className="text-base font-medium">{el.description}</p>
+        <div key={el._id} className=" flex flex-col gap-1">
+          <div className="w-full bg-MainBg rounded-xl flex flex-col gap-4 p-3 my-3">
+            <div className="max-w-[1000px] w-full">
+            <p className="text-sm font-medium p-2">Description </p>
+            <p className="text-base font-medium w-full bg-DarkGrey p-2 rounded-xl">{el.description} </p>
+            </div>
           </div>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            className=" bg-MainBg rounded-xl flex justify-center py-3 px-6  hover:scale-105 ease-in-out duration-300 transition-all"
             onClick={() => handleDelete(el._id)}
           >
             Delete
           </button>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6 my-1 hover:scale-105 ease-in-out duration-300 transition-all"
             onClick={() => router.push(`/why-us/${el._id}`)}
           >
             Edit

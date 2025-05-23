@@ -77,7 +77,7 @@ export default function Dashboard() {
 
   return (
     <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-450:p-3">
-      <div className="w-full max-w-[1000px] flex justify-between p-3 relative max-400:">
+      <div className="w-full max-w-[1000px] flex justify-between p-3 relative ">
         <div>
           <h1 className="text-2xl font-bold mb-4">კურსები</h1>
         </div>

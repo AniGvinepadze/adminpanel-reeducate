@@ -74,17 +74,18 @@ export default function page() {
   };
 
   return (
-    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 ">
+    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-450:p-3">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
           <h1 className="text-2xl font-bold mb-4">ჩვენ შესახებ</h1>
         </div>
         <button
-          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium
-            "
+          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-400:py-1
+          "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-          + დამატება
+         <p className="max-400: text-2xl -mt-1">+</p>
+         <p className="max-400:hidden">დამატება</p>
         </button>
       </div>
       {isAddModalOpen && (
@@ -98,32 +99,51 @@ export default function page() {
         </div>
       )}
 
-      {aboutUs.map((el) => (
-        <div key={el._id} className="flex justify-between gap-3">
-          <div className="w-full bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-10 my-3">
-            <p className="text-base font-medium">{el.description}</p>
-            <p className="text-base font-medium">{el.title}</p>
-            {el.images && el.images.length > 0 ? (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
-                alt={el.title}
-                width={80}
-                height={30}
-                className="object-cover rounded max-h-[25px]"
-              />
-            ) : (
-              <p>No image</p>
-            )}
+    {aboutUs.map((el) => (
+        <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
+          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-600:gap-2 max-550:flex-col">
+            <div className="flex-shrink-0 h-full overflow-hidden">
+              {el.images && el.images.length > 0 ? (
+                <div className="h-full max-w-[450px] w-full rounded">
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
+                    alt={el.title}
+                    width={410}
+                    height={150}
+                    className="object-cover rounded-md min-h-[250px] max-w-[250px] 
+            max-550:max-w-[410px] max-550:max-h-[150px]"
+                  />
+                </div>
+              ) : (
+                <p>No image</p>
+              )}
+            </div>
+
+            <div className="max-w-[900px] w-full p-3 max-600:p-0">
+              <div className="w-full max-w-[800px]">
+                <p className="p-2 font-medium text-sm">Title</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                  {el.title}
+                </p>
+              </div>
+              <div className="w-full max-w-[800px] my-4">
+                <p className="p-2 font-medium text-sm">Description</p>
+                <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                  {el.description}
+                </p>
+              </div>
+              
+            </div>
           </div>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
+            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
             onClick={() => handleDelete(el._id)}
           >
             Delete
           </button>
           <button
-            className=" bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 my-3 hover:scale-110 ease-in-out duration-300 transition-all"
-            onClick={() => router.push(`/about-us/${el._id}`)}
+            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+            onClick={() => router.push(`/courses/${el._id}`)}
           >
             Edit
           </button>

@@ -58,9 +58,6 @@ export default function EditCoursePage() {
           img: courseData.images?.[0] || "",
           imageFile: null,
         });
-        // if (courseData.images && courseData.images[0]) {
-        //   setPreviewImageUrl(courseData.images[0]);
-        // }
       } catch (error) {
         console.error("Failed to load course", error);
       }
@@ -75,31 +72,6 @@ export default function EditCoursePage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (!e.target.files || e.target.files.length === 0) return;
-
-  //   const file = e.target.files[0];
-  //   const formDataUpload = new FormData();
-  //   formDataUpload.append("image", file);
-
-  //   try {
-  //     const response = await axiosInstance.post(
-  //       "/courses/upload-image",
-  //       formDataUpload,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-
-  //     setFormData((prev) => ({ ...prev, img: response.data.img }));
-  //   } catch (error) {
-  //     console.error("Failed to upload image", error);
-  //   }
-  // };
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
     const file = e.target.files[0];
@@ -110,19 +82,6 @@ export default function EditCoursePage() {
     }));
     setPreviewImageUrl(localUrl);
   };
-
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     await axiosInstance.patch(`/courses/${id}`, formData, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     router.push("/");
-  //   } catch (error) {
-  //     console.error("Failed to update course", error);
-  //   }
-  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

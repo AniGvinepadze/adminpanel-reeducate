@@ -6,19 +6,36 @@ import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { AboutUs } from "../page";
 
-
 export default function EditCoursePage() {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
-
+  
+  const [user, setUser] = useState();
   const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     img: "",
+    imageFile: null as File | null,
   });
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+
   const token = getCookie("accessToken") as string;
+
+  
+    const getCurrentUser = async (token: string) => {
+      try {
+        const response = await axiosInstance.get("/auth/current-admin", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(response.data);
+      } catch (error) {
+        router.push("/sign-in");
+      }
+    };
 
   useEffect(() => {
     async function fetchCourse() {
@@ -53,12 +70,16 @@ export default function EditCoursePage() {
     formDataUpload.append("image", file);
 
     try {
-      const response = await axiosInstance.post("/courses/upload-image", formDataUpload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosInstance.post(
+        "/courses/upload-image",
+        formDataUpload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setFormData((prev) => ({ ...prev, img: response.data.img }));
     } catch (error) {
       console.error("Failed to upload image", error);

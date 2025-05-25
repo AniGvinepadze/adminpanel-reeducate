@@ -23,8 +23,8 @@ export default function BlogsPopup({
   const [user, setUser] = useState();
   const [formData, setFormData] = useState({
     description: "",
-    title:"",
-    link:""
+    title: "",
+    link: "",
   });
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -91,7 +91,7 @@ export default function BlogsPopup({
     <div>
       <div
         ref={modalRef}
-        className="bg-[#535353] shadow-xl  rounded-lg  w-[560px] p-6"
+        className="bg-[#535353] shadow-xl  rounded-lg  max-w-[560px] w-full p-6"
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Add New Blog</h2>
@@ -117,8 +117,8 @@ export default function BlogsPopup({
               placeholder="Enter course name"
               className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
             />
-            </div>
-             <div>
+          </div>
+          <div>
             <label htmlFor="link" className="block text-sm font-medium">
               Link
             </label>
@@ -131,32 +131,32 @@ export default function BlogsPopup({
               placeholder="Enter course name"
               className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
             />
-             <div>
-            <label htmlFor="description" className="block text-sm font-medium mt-4">
-              Description
-            </label>
-            <input
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter course name"
-              className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
-            />
+            <div>
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium mt-4"
+              >
+                Description
+              </label>
+              <input
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                type="text"
+                placeholder="Enter course name"
+                className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
+              />
+            </div>
 
-          </div>
-
-
-
-          <div className="flex justify-end gap-4 mt-6">
-            <button
-              type="submit"
-              className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
-            >
-              Add Blog
-            </button>
-          </div>
+            <div className="flex justify-end gap-4 mt-6">
+              <button
+                type="submit"
+                className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
+              >
+                Add Blog
+              </button>
+            </div>
           </div>
         </form>
       </div>

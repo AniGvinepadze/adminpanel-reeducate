@@ -89,7 +89,7 @@ export default function page() {
           <p className="max-500:hidden mt-1">დამატება</p>
         </button>
         {isAddModalOpen && (
-          <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">
+  <div className="max-w-[600px] w-full  absolute left-1/2 top-20 translate-x-[-50%] max-1100:translate-x-[-60%] max-800:translate-x-[-50%] max-700:w-[400px] max-700:translate-x-[-50%]  max-450:max-w-[300px]">
             <BlogsPopup
               setIsAddModalOpen={setIsAddModalOpen}
               isAddModalOpen={isAddModalOpen}

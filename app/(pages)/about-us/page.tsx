@@ -75,7 +75,7 @@ export default function page() {
 
   return (
     <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-500:p-3">
-      <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
+      <div className=" w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
           <h1 className="text-2xl font-bold mb-4 max-400:text-xl mt-1">
             ჩვენ შესახებ
@@ -91,7 +91,7 @@ export default function page() {
         </button>
       </div>
       {isAddModalOpen && (
-        <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">
+        <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-1100:translate-x-[-40%] max-800:translate-x-[-50%] max-700:w-[400px] max-700:translate-x-[-50%]  max-450:max-w-[300px]">
           <AboutUsPopup
             setIsAddModalOpen={setIsAddModalOpen}
             isAddModalOpen={isAddModalOpen}

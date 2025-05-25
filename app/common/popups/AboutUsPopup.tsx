@@ -105,7 +105,7 @@ export default function AboutUsPopup({
     <div>
       <div
         ref={modalRef}
-        className="bg-[#535353] shadow-xl  rounded-lg  w-[560px] p-6"
+        className="bg-[#535353] shadow-xl  rounded-lg  max-w-[560px] w-full p-6"
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Add New About Us Content</h2>
@@ -113,7 +113,7 @@ export default function AboutUsPopup({
             onClick={() => setIsAddModalOpen(false)}
             className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
           >
-            +  
+            +
           </button>
         </div>
 
@@ -135,7 +135,7 @@ export default function AboutUsPopup({
 
           <div>
             <label htmlFor="description" className="block text-sm font-medium ">
-            Description
+              Description
             </label>
             <input
               id="description"
@@ -148,7 +148,6 @@ export default function AboutUsPopup({
             />
           </div>
 
-         
           <div>
             <label htmlFor="images" className="block text-sm font-medium">
               Upload Image

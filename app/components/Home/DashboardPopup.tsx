@@ -107,7 +107,7 @@ export default function DashboardPopup({
     <div>
       <div
         ref={modalRef}
-        className="bg-[#535353] shadow-xl  rounded-lg   w-[560px] p-6  inset-0    z-50"
+        className="bg-[#535353] shadow-xl  rounded-lg   max-w-[560px] w-full p-6  inset-0 z-50 max-1100:left-20"
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Add New Course</h2>

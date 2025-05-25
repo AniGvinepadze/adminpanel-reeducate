@@ -4,18 +4,16 @@ import React, { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
-import { AboutUs } from "../page";
+import { Partners } from "../page";
 
-export default function EditAboutUsPage() {
+export default function EditPartnerPage() {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
 
   const [user, setUser] = useState();
-  const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
+  const [partner, setPartner] = useState<Partners | null>(null);
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
     img: "",
     imageFile: null as File | null,
   });
@@ -39,15 +37,13 @@ export default function EditAboutUsPage() {
   useEffect(() => {
     async function fetchCourse() {
       try {
-        const response = await axiosInstance.get(`/about-us/${id}`, {
+        const response = await axiosInstance.get(`/partners/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const aboutUsData = response.data;
-        setAboutUs(aboutUsData);
+        const partnerData = response.data;
+        setPartner(partnerData);
         setFormData({
-          title: aboutUsData.title,
-          description: aboutUsData.description,
-          img: aboutUsData.images?.[0] || "",
+          img: partnerData.images?.[0] || "",
           imageFile: null,
         });
       } catch (error) {
@@ -81,49 +77,31 @@ export default function EditAboutUsPage() {
     e.preventDefault();
 
     const formDataToSend = new FormData();
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("title", formData.title);
+ 
     if (formData.imageFile) {
       formDataToSend.append("img", formData.imageFile);
     }
 
     try {
-      await axiosInstance.patch(`/about-us/${id}`, formDataToSend, {
+      await axiosInstance.patch(`/partners/${id}`, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
-      router.push("/about-us");
+      router.push("/partners");
     } catch (error) {
       console.error("Failed to update course", error);
     }
   };
 
-  if (!aboutUs) return <p>Loading...</p>;
+  if (!partner) return <p>Loading...</p>;
 
   return (
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-700:p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Course</h1>
+      <h1 className="text-2xl font-bold mb-4">Edit Partner</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {["title", "description"].map((field) => (
-          <div key={field}>
-            <label
-              htmlFor={field}
-              className="block mb-1 font-medium capitalize p-1"
-            >
-              {field}
-            </label>
-            <input
-              id={field}
-              name={field}
-              value={(formData as any)[field]}
-              onChange={handleChange}
-              className="w-full border text-gray-700 border-gray-300 rounded-xl px-3 py-2"
-            />
-          </div>
-        ))}
-
+     
         <div>
           <label
             htmlFor="image"

@@ -5,7 +5,10 @@ import "./globals.css";
 import SideBar from "./components/global/SideBar";
 import Header from "./components/global/Header";
 import MobileSidebar from "./components/global/MobileSideBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { axiosInstance } from "./lib/axiosIntance";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,6 +32,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [user, setUser] = useState();
+
+  const token = getCookie("accessToken") as string;
+  const router = useRouter();
+
+  const getCurrentUser = async (token: string) => {
+    try {
+      const response = await axiosInstance.get("/auth/current-admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+    } catch (error) {
+      router.push("/sign-in");
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser(token as string);
+  }, []);
+
+  if (!user) return null;
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   return (

@@ -43,14 +43,10 @@ export default function SignInFormFields() {
   useEffect(() => {
     const token = searchParams.get("token");
     if (token) {
-      (async () => {
-        await getCurrentUser(token);
-        setCookie("accessToken", token, { maxAge: 60 * 60 });
-        router.push("/");
-      })();
+      setCookie("accessToken", token, { maxAge: 60 * 60 });
+      router.push("/");
     }
   }, [searchParams]);
-
   const onSubmit = async (formData: FormData) => {
     setError(null);
 
@@ -63,6 +59,7 @@ export default function SignInFormFields() {
           maxAge: 60 * 60,
         });
 
+        router.refresh();
         router.push("/");
       }
     } catch (error: any) {

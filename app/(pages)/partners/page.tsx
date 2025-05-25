@@ -88,7 +88,7 @@ export default function page() {
         </button>
       </div>
       {isAddModalOpen && (
-        <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%]">
+             <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-1100:translate-x-[-40%] max-800:translate-x-[-50%] max-700:w-[400px] max-700:translate-x-[-50%]  max-450:max-w-[300px]">
           <PartnerPopup
             setIsAddModalOpen={setIsAddModalOpen}
             isAddModalOpen={isAddModalOpen}

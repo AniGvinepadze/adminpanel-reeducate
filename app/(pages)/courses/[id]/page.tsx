@@ -10,7 +10,7 @@ type Course = {
   name: string;
   category: string;
   link: string;
-  img: string;
+  images: string[];
 };
 
 export default function EditCoursePage() {
@@ -18,14 +18,17 @@ export default function EditCoursePage() {
   const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
 
-  const [user,setUser] = useState()
+  const [user, setUser] = useState();
   const [course, setCourse] = useState<Course | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     category: "",
     link: "",
     img: "",
+    imageFile: null as File | null,
   });
+
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const token = getCookie("accessToken") as string;
 
   const getCurrentUser = async (token: string) => {
@@ -36,34 +39,35 @@ export default function EditCoursePage() {
         },
       });
       setUser(response.data);
-
-
     } catch (error) {
       router.push("/sign-in");
     }
   };
   useEffect(() => {
-       
     async function fetchCourse() {
       try {
         const response = await axiosInstance.get(`/courses/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setCourse(response.data);
+        const courseData = response.data;
+        setCourse(courseData);
         setFormData({
-          name: response.data.name,
-          category: response.data.category,
-          link: response.data.link,
-          img: response.data.img,
+          name: courseData.name,
+          category: courseData.category,
+          link: courseData.link,
+          img: courseData.images?.[0] || "",
+          imageFile: null,
         });
-
+        // if (courseData.images && courseData.images[0]) {
+        //   setPreviewImageUrl(courseData.images[0]);
+        // }
       } catch (error) {
         console.error("Failed to load course", error);
       }
     }
 
     fetchCourse();
-    getCurrentUser(token as string)
+    getCurrentUser(token as string);
   }, [id, token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,33 +75,73 @@ export default function EditCoursePage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (!e.target.files || e.target.files.length === 0) return;
+
+  //   const file = e.target.files[0];
+  //   const formDataUpload = new FormData();
+  //   formDataUpload.append("image", file);
+
+  //   try {
+  //     const response = await axiosInstance.post(
+  //       "/courses/upload-image",
+  //       formDataUpload,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     setFormData((prev) => ({ ...prev, img: response.data.img }));
+  //   } catch (error) {
+  //     console.error("Failed to upload image", error);
+  //   }
+  // };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-
     const file = e.target.files[0];
-    const formDataUpload = new FormData();
-    formDataUpload.append("image", file);
-
-    try {
-      const response = await axiosInstance.post("/courses/upload-image", formDataUpload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-   
-      setFormData((prev) => ({ ...prev, img: response.data.img }));
-    } catch (error) {
-      console.error("Failed to upload image", error);
-    }
+    const localUrl = URL.createObjectURL(file);
+    setFormData((prev) => ({
+      ...prev,
+      imageFile: file,
+    }));
+    setPreviewImageUrl(localUrl);
   };
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     await axiosInstance.patch(`/courses/${id}`, formData, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.error("Failed to update course", error);
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("category", formData.category);
+    formDataToSend.append("link", formData.link);
+
+    if (formData.imageFile) {
+      formDataToSend.append("img", formData.imageFile);
+    }
+
     try {
-      await axiosInstance.patch(`/courses/${id}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
+      await axiosInstance.patch(`/courses/${id}`, formDataToSend, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
       router.push("/");
     } catch (error) {
@@ -129,7 +173,6 @@ export default function EditCoursePage() {
           </div>
         ))}
 
-
         <div>
           <label
             htmlFor="image"
@@ -144,14 +187,14 @@ export default function EditCoursePage() {
             onChange={handleImageChange}
             className="w-full"
           />
-          {formData.img && (
+          {previewImageUrl && (
             <div className="mt-2">
               <img
-                src={formData.img}
-                alt="Course"
+                src={previewImageUrl}
+                alt="Preview"
                 className="max-w-xs max-h-40 object-contain rounded"
               />
-              <p className="text-sm break-all">{formData.img}</p>
+              <p className="text-sm break-all">{previewImageUrl}</p>
             </div>
           )}
         </div>

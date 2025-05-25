@@ -105,7 +105,7 @@ export default function FeedbackPopup({
     <div>
       <div
         ref={modalRef}
-        className="bg-[#535353] shadow-xl  rounded-lg  w-[560px] p-6"
+        className="bg-[#535353] shadow-xl  rounded-lg  max-w-[560px] w-full p-6"
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Add New Feedback</h2>
@@ -132,8 +132,6 @@ export default function FeedbackPopup({
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
             />
           </div>
-
-     
 
           <div>
             <label htmlFor="category" className="block text-sm font-medium">

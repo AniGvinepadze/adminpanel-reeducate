@@ -9,9 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        MainBg:'#151515',
-        DarkGrey:"#212121",
-        
+        MainBg: "#151515",
+        DarkGrey: "#212121",
       },
       screens: {
         "max-1400": { max: "1400px" },
@@ -41,7 +40,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
 
 export default config;

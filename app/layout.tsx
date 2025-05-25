@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -28,7 +28,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
   return (
@@ -36,14 +36,28 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#151515] text-[#e0dede]`}
       >
-        <div className="max-w-[1440px] w-full m-auto p-5">
+        <div className="max-w-[1440px] w-full m-auto p-3">
+          {/* <div className="sticky top-0 z-50 bg-[#151515] p-4 shadow-md rounded-xl"> */}
           <Header onLogoClick={toggleSidebar} />
-          <div className="flex justify-between my-10 gap-5 max-800:flex-col">
-            <div className=" max-w-[350px] w-full bg-DarkGrey shadow-lg rounded-xl p-7 max-1000:max-w-[250px]  max-800:max-w-full  sticky top-0 max-h-[800px] overflow-y-auto custom-scrollbar max-1000:p-3 max-800:hidden">
+          {/* </div> */}
+          <div className="flex justify-between mt-10 gap-5 max-800:flex-col">
+            <div
+              className="
+    sticky top-6
+    max-h-screen
+    overflow-y-auto
+    scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800
+    max-w-[350px] w-full
+    bg-DarkGrey shadow-lg rounded-xl p-7
+    max-[1000px]:max-w-[250px]
+    max-[800px]:max-w-full max-[800px]:hidden
+    max-[1000px]:p-3
+  "
+            >
               <SideBar />
             </div>
             <div className="hidden max-800:flex">
-              <MobileSidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen}/>
+              <MobileSidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
             </div>
 
             <div className="max-w-[1000px] w-full ">{children}</div>

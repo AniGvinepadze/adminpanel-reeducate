@@ -91,7 +91,7 @@ export default function FaqPopup({
     <div>
       <div
         ref={modalRef}
-        className="bg-[#535353] shadow-xl  rounded-lg  w-[560px] p-6"
+        className="bg-[#535353] shadow-xl  rounded-lg  max-w-[560px] w-full p-6"
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Add New Question</h2>

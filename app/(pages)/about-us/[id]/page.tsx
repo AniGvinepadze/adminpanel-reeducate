@@ -10,7 +10,7 @@ export default function EditCoursePage() {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
-  
+
   const [user, setUser] = useState();
   const [aboutUs, setAboutUs] = useState<AboutUs | null>(null);
   const [formData, setFormData] = useState({
@@ -23,19 +23,18 @@ export default function EditCoursePage() {
 
   const token = getCookie("accessToken") as string;
 
-  
-    const getCurrentUser = async (token: string) => {
-      try {
-        const response = await axiosInstance.get("/auth/current-admin", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data);
-      } catch (error) {
-        router.push("/sign-in");
-      }
-    };
+  const getCurrentUser = async (token: string) => {
+    try {
+      const response = await axiosInstance.get("/auth/current-admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+    } catch (error) {
+      router.push("/sign-in");
+    }
+  };
 
   useEffect(() => {
     async function fetchCourse() {
@@ -43,11 +42,13 @@ export default function EditCoursePage() {
         const response = await axiosInstance.get(`/about-us/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setAboutUs(response.data);
+        const aboutUsData = response.data;
+        setAboutUs(aboutUsData);
         setFormData({
-          title: response.data.title,
-          description: response.data.description,
-          img: response.data.img,
+          title: aboutUsData.title,
+          description: aboutUsData.description,
+          img: aboutUsData.images?.[0] || "",
+          imageFile: null,
         });
       } catch (error) {
         console.error("Failed to load course", error);
@@ -55,6 +56,7 @@ export default function EditCoursePage() {
     }
 
     fetchCourse();
+    getCurrentUser(token as string);
   }, [id, token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,34 +68,33 @@ export default function EditCoursePage() {
     if (!e.target.files || e.target.files.length === 0) return;
 
     const file = e.target.files[0];
-    const formDataUpload = new FormData();
-    formDataUpload.append("image", file);
+    const localUrl = URL.createObjectURL(file);
 
-    try {
-      const response = await axiosInstance.post(
-        "/courses/upload-image",
-        formDataUpload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setFormData((prev) => ({ ...prev, img: response.data.img }));
-    } catch (error) {
-      console.error("Failed to upload image", error);
-    }
+    setFormData((prev) => ({
+      ...prev,
+      imageFile: file,
+    }));
+    setPreviewImageUrl(localUrl);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const formDataToSend = new FormData();
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("title", formData.title);
+    if (formData.imageFile) {
+      formDataToSend.append("img", formData.imageFile);
+    }
+
     try {
-      await axiosInstance.patch(`/about-us/${id}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
+      await axiosInstance.patch(`/about-us/${id}`, formDataToSend, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
-      router.push("/");
+      router.push("/about-us");
     } catch (error) {
       console.error("Failed to update course", error);
     }
@@ -123,7 +124,6 @@ export default function EditCoursePage() {
           </div>
         ))}
 
-        {/* Image Upload */}
         <div>
           <label
             htmlFor="image"
@@ -138,14 +138,14 @@ export default function EditCoursePage() {
             onChange={handleImageChange}
             className="w-full"
           />
-          {formData.img && (
+          {previewImageUrl && (
             <div className="mt-2">
               <img
-                src={formData.img}
-                alt="Course"
+                src={previewImageUrl}
+                alt="Preview"
                 className="max-w-xs max-h-40 object-contain rounded"
               />
-              <p className="text-sm break-all">{formData.img}</p>
+              <p className="text-sm break-all">{previewImageUrl}</p>
             </div>
           )}
         </div>

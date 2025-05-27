@@ -98,7 +98,7 @@ export default function EditPartnerPage() {
   if (!partner) return <p>Loading...</p>;
 
   return (
-    <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-700:p-4">
+    <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Partner</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
      

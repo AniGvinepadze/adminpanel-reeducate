@@ -73,22 +73,22 @@ export default function page() {
   };
 
   return (
-    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7  max-500:p-3">
+    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7  max-[500px]:p-3">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
-          <h1 className="text-2xl font-bold mb-4 max-400:text-xl">პარტნიორები</h1>
+          <h1 className="text-2xl font-bold mb-4 max-[400px]:text-xl">პარტნიორები</h1>
         </div>
         <button
-          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-500:py-1 max-400:px-4
+          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[500px]:py-1 max-[400px]:px-4
           "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-          <p className="max-500: text-2xl max-400:text-lg">+</p>
-          <p className="max-500:hidden mt-1">დამატება</p>
+          <p className="max-[500px]: text-2xl max-[400px]:text-lg">+</p>
+          <p className="max-[500px]:hidden mt-1">დამატება</p>
         </button>
       </div>
       {isAddModalOpen && (
-             <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-1100:translate-x-[-40%] max-800:translate-x-[-50%] max-700:w-[400px] max-700:translate-x-[-50%]  max-450:max-w-[300px]">
+             <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-1100:translate-x-[-40%] max-[800px]:translate-x-[-50%] max-[700px]:w-[400px] max-700:translate-x-[-50%]  max-[450px]:max-w-[300px]">
           <PartnerPopup
             setIsAddModalOpen={setIsAddModalOpen}
             isAddModalOpen={isAddModalOpen}
@@ -97,8 +97,8 @@ export default function page() {
           />
         </div>
       )}
-      <div className="max-450:flex max-450:justify-center">
-        <div className="grid grid-cols-3 gap-3 max-1050:grid-cols-2 max-450:grid-cols-1 ">
+      <div className="max-450:flex max-[450px]:justify-center">
+        <div className="grid grid-cols-3 gap-3 max-[1050px]:grid-cols-2 max-[450px]:grid-cols-1 ">
           {partner.map((el) => (
             <div key={el._id} className="flex flex-col gap-1 max-w-[275px] ">
               <div className=" bg-MainBg rounded-xl flex justify-between gap-4 p-3 my-3">

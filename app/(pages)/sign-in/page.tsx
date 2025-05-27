@@ -15,20 +15,20 @@ export default function SignIn() {
               alt="logo"
               width={70}
               height={42}
-              className="max-450:max-w-[60px] rounded-xl max-350:max-w-[50px]"
+              className="max-[450px]:max-w-[60px] rounded-xl max-[350px]:max-w-[50px]"
             />
             <div className="flex gap-1">
-              <h2 className="text-3xl font-semibold  max-450:text-[26px] max-350:text-[23px] ">
+              <h2 className="text-3xl font-semibold  max-[450px]:text-[26px] max-[350px]:text-[23px] ">
                 re:
               </h2>
-              <h2 className="text-3xl font-semibold max-450:text-[26px] rotate-180 max-450:mt-[7px] max-350:text-[23px] ">
+              <h2 className="text-3xl font-semibold max-[450px]:text-[26px] rotate-180 max-[450px]:mt-[7px] max-[350px]:text-[23px] ">
                 educate
               </h2>
             </div>
           </div>
-          <div className="max-w-[580px] flex flex-col gap-2 mt-16  w-full max-450:mt-9 ">
+          <div className="max-w-[580px] flex flex-col gap-2 mt-16  w-full max-[450px]:mt-9 ">
             <div className="">
-              <h2 className="text-[30px] font-semibold max-450:text-2xl">
+              <h2 className="text-[30px] font-semibold max-[450px]:text-2xl">
                 Sign-in
               </h2>
 

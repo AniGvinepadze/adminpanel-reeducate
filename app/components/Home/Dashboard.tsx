@@ -54,25 +54,7 @@ export default function Dashboard() {
     }
   };
 
-  const getFullImageUrl = (imgPath: string) => {
-    if (imgPath.startsWith("http")) return imgPath;
-    return `https://your-bucket-name.s3.amazonaws.com/${imgPath}`;
-  };
-  const handleUpdate = async (id: string, updatedData: Partial<Courses>) => {
-    try {
-      const response = await axiosInstance.put(`/courses/${id}`, updatedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
 
-      setCourses((prev) =>
-        prev.map((course) => (course._id === id ? response.data : course))
-      );
-    } catch (error) {
-      console.error("Failed to update course:", error);
-    }
-  };
   const router = useRouter();
 
   return (

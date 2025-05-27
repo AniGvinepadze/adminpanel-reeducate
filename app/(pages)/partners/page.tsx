@@ -97,7 +97,7 @@ export default function page() {
           />
         </div>
       )}
-      <div className="max-450:flex max-[450px]:justify-center">
+      <div className="max-[450px]:flex max-[450px]:justify-center ">
         <div className="grid grid-cols-3 gap-3 max-[1050px]:grid-cols-2 max-[450px]:grid-cols-1 ">
           {partner.map((el) => (
             <div key={el._id} className="flex flex-col gap-1 max-w-[275px] ">

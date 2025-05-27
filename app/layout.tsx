@@ -1,4 +1,3 @@
-
 import ClientLayout from "./components/ClientLayout";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -8,8 +7,6 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
 });
-
-
 
 export const metadata = {
   title: "Create Next App",
@@ -23,12 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={` antialiased bg-[#151515] text-[#e0dede]`}
-      >
-<div>
-  <ClientLayout >{children}</ClientLayout>
-</div>
+      <body className="antialiased bg-[#151515] text-[#e0dede]">
+        <div>
+          <ClientLayout>{children}</ClientLayout>
+        </div>
       </body>
     </html>
   );

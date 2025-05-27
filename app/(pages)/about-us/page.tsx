@@ -74,24 +74,24 @@ export default function page() {
   };
 
   return (
-    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-500:p-3">
+    <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7 max-[500px]:p-3">
       <div className=" w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
-          <h1 className="text-2xl font-bold mb-4 max-400:text-xl mt-1">
+          <h1 className="text-2xl font-bold mb-4 max-[400px]:text-xl mt-1">
             ჩვენ შესახებ
           </h1>
         </div>
         <button
-          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-500:py-1
+          className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[500px]:py-1
           "
           onClick={() => setIsAddModalOpen((prev) => !prev)}
         >
-          <p className="max-500: text-2xl -mt-1 max-500:mt-0">+</p>
-          <p className="max-500:hidden ">დამატება</p>
+          <p className="max-[500px]: text-2xl -mt-1 max-[500px]:mt-0">+</p>
+          <p className="max-[500px]:hidden ">დამატება</p>
         </button>
       </div>
       {isAddModalOpen && (
-        <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-1100:translate-x-[-40%] max-800:translate-x-[-50%] max-700:w-[400px] max-700:translate-x-[-50%]  max-450:max-w-[300px]">
+        <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-[1100px]:translate-x-[-40%] max-[800px]:translate-x-[-50%] max-[700px]:w-[400px] max-[700px]:translate-x-[-50%]  max-[450px]:max-w-[300px]">
           <AboutUsPopup
             setIsAddModalOpen={setIsAddModalOpen}
             isAddModalOpen={isAddModalOpen}
@@ -103,7 +103,7 @@ export default function page() {
 
       {aboutUs.map((el) => (
         <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
-          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-1100:gap-2 max-550:flex-col">
+          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[1100px]:gap-2 max-[550px]:flex-col">
             <div className="flex-shrink-0 h-full overflow-hidden">
               {el.images && el.images.length > 0 ? (
                 <div className="h-full max-w-[450px] w-full rounded">
@@ -112,8 +112,8 @@ export default function page() {
                     alt={el.title}
                     width={410}
                     height={150}
-                    className="object-cover rounded-md min-h-[250px] max-w-[250px] max-1100:max-w-[190px] 
-            max-550:max-w-[410px] max-550:max-h-[150px] "
+                    className="object-cover rounded-md min-h-[250px] max-w-[250px] max-[1100px]:max-w-[190px] 
+            max-[550px]:max-w-[410px] max-[550px]:max-h-[150px] "
                   />
                 </div>
               ) : (
@@ -121,7 +121,7 @@ export default function page() {
               )}
             </div>
 
-            <div className="max-w-[900px] w-full py-3 px-3 max-950:px-0">
+            <div className="max-w-[900px] w-full py-3 px-3 max-[950px]:px-0">
               <div className="w-full max-w-[800px]">
                 <p className="p-2 font-medium text-sm">Title</p>
                 <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">

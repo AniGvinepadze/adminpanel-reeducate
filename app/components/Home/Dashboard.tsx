@@ -54,7 +54,6 @@ export default function Dashboard() {
     }
   };
 
-  console.log(process.env.NEXT_PUBLIC_CLOUD_FRONT_URI, "ani goimo");
   const router = useRouter();
 
   return (

@@ -54,7 +54,7 @@ export default function Dashboard() {
     }
   };
 
-
+  console.log(process.env.NEXT_PUBLIC_CLOUD_FRONT_URI, "ani goimo");
   const router = useRouter();
 
   return (
@@ -85,7 +85,7 @@ export default function Dashboard() {
 
       {courses.map((el) => (
         <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
-          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[600px]:gap-2 max-[550px]:flex-col" >
+          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[600px]:gap-2 max-[550px]:flex-col">
             <div className="flex-shrink-0 h-full overflow-hidden">
               {el.images && el.images.length > 0 ? (
                 <div className="h-full max-w-[450px] w-full rounded">

@@ -1,9 +1,10 @@
 "use client";
+
 import { AboutUs } from "@/app/(pages)/about-us/page";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 
 type AboutUsPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,12 +13,12 @@ type AboutUsPopupProps = {
   setAboutUs: React.Dispatch<React.SetStateAction<AboutUs[]>>;
 };
 
-export default function AboutUsPopup({
+const AboutUsPopup: FC<AboutUsPopupProps> = ({
   setIsAddModalOpen,
   isAddModalOpen,
   aboutUs,
   setAboutUs,
-}: AboutUsPopupProps) {
+}) => {
   const [user, setUser] = useState();
   const [formData, setFormData] = useState({
     title: "",
@@ -30,13 +31,13 @@ export default function AboutUsPopup({
   const modalRef = useRef<HTMLDivElement>(null);
 
   const token = getCookie("accessToken") as string;
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        setIsAddModalOpen(false);
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        if (setIsAddModalOpen) {
+          setIsAddModalOpen(false);
+        }
       }
     }
 
@@ -49,7 +50,8 @@ export default function AboutUsPopup({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isAddModalOpen]);
+  }, [isAddModalOpen, setIsAddModalOpen]);
+
   useEffect(() => {
     const getCurrentUser = async () => {
       if (!token || !router) return;
@@ -98,20 +100,26 @@ export default function AboutUsPopup({
         },
       });
       setAboutUs((prev) => [...prev, response.data]);
-      setIsAddModalOpen(false);
-    } catch (error) {}
+      if (setIsAddModalOpen) {
+        setIsAddModalOpen(false);
+      }
+    } catch (error) {
+      // You might want to handle the error here
+      console.error(error);
+    }
   };
+
   return (
     <div>
       <div
         ref={modalRef}
-        className="bg-[#535353] shadow-xl  rounded-lg  max-w-[560px] w-full p-6"
+        className="bg-[#535353] shadow-xl rounded-lg max-w-[560px] w-full p-6"
       >
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Add New About Us Content</h2>
           <button
-            onClick={() => setIsAddModalOpen(false)}
-            className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
+            onClick={() => setIsAddModalOpen?.(false)}
+            className="hover:text-gray-700 rotate-45 text-4xl transition-all ease-in-out duration-300"
           >
             +
           </button>
@@ -134,7 +142,7 @@ export default function AboutUsPopup({
           </div>
 
           <div>
-            <label htmlFor="description" className="block text-sm font-medium ">
+            <label htmlFor="description" className="block text-sm font-medium">
               Description
             </label>
             <input
@@ -159,7 +167,7 @@ export default function AboutUsPopup({
               type="file"
               accept="image/*"
               placeholder="Upload image"
-              className="mt-1 block w-full border  text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black  sm:text-sm p-2"
+              className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
             />
           </div>
 
@@ -175,4 +183,6 @@ export default function AboutUsPopup({
       </div>
     </div>
   );
-}
+};
+
+export default AboutUsPopup;

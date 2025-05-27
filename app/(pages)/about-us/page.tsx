@@ -1,6 +1,6 @@
 "use client";
 
-import AboutUsPopup from "@/app/common/popups/AboutUsPopup";
+import AboutUsPopup from "../../common/popups/AboutUsPopup"
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
@@ -17,7 +17,7 @@ export type AboutUs = {
 export default function page() {
   const [user, setUser] = useState();
   const [aboutUs, setAboutUs] = useState<AboutUs[]>([]);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const token = getCookie("accessToken") as string;
 
   const router = useRouter();

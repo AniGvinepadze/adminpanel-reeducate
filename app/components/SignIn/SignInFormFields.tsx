@@ -57,10 +57,9 @@ export default function SignInFormFields() {
       if (response.status === 201) {
         setCookie("accessToken", response.data.accessToken, {
           maxAge: 60 * 60,
+          path: "/",
         });
-
-        router.refresh();
-        router.push("/");
+        window.location.href = "/";
       }
     } catch (error: any) {
       setError(error.response.data.message);

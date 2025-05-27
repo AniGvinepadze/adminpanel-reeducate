@@ -90,7 +90,7 @@ export default function Dashboard() {
               {el.images && el.images.length > 0 ? (
                 <div className="h-full max-w-[450px] w-full rounded">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_CLOUD_FRONT_URI}${el.images[0]}`}
+                    src={`https://d1monaii5gqb9o.cloudfront.net/${el.images[0]}`}
                     alt={el.name}
                     width={410}
                     height={150}

@@ -26,12 +26,12 @@ export default function Header({ onLogoClick }: HeaderProps) {
             alt="logo"
             width={100}
             height={30}
-            className="rounded-xl max-600:max-w-[70px]"
+            className="rounded-xl max-[600px]:max-w-[70px]"
           />
         </div>
         <div className="flex">
           <button
-            className="bg-[#151515]  text-base font-medium flex items-center px-7 rounded-xl border-2 border-[#151515] hover:bg-transparent transition-all ease-in-out duration-300 hover:scale-105 max-400:px-4 "
+            className="bg-[#151515]  text-base font-medium flex items-center px-7 rounded-xl border-2 border-[#151515] hover:bg-transparent transition-all ease-in-out duration-300 hover:scale-105 max-[400px]:px-4 "
             onClick={signOut}
           >
             Log Out

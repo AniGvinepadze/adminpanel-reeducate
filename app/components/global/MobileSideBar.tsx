@@ -46,7 +46,7 @@ export default function MobileSidebar({ isOpen, setIsOpen }:MobileSidebarProps) 
             key={el.id}
             className=" w-full shadow-md p-3 my-3 rounded-xl cursor-pointer hover:scale-110 transition-all ease-in-out duration-300  "
           >
-            <p className="text-base font-medium max-400:text-sm">{el.title}</p>
+            <p className="text-base font-medium max-[400px]:text-sm">{el.title}</p>
           </Link>
         ))}
          </div>

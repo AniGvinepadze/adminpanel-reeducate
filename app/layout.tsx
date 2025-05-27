@@ -1,3 +1,4 @@
+
 import ClientLayout from "./components/ClientLayout";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -21,9 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-[#151515] text-[#e0dede]">
-        <div>
-          <ClientLayout>{children}</ClientLayout>
-        </div>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

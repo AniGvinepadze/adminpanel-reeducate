@@ -19,6 +19,7 @@ export default function ClientLayout({
   const router = useRouter();
 
   useEffect(() => {
+    console.log("hello");
     const getCurrentUser = async () => {
       const token = getCookie("accessToken") as string;
 
@@ -33,35 +34,37 @@ export default function ClientLayout({
             Authorization: `Bearer ${token}`,
           },
         });
-
+        setLoading(false);
         setUser(response.data);
       } catch (error) {
+        console.log(error);
         router.push("/sign-in");
+        return;
       } finally {
         setLoading(false);
       }
     };
 
     getCurrentUser();
-  }, []);
+  }, [router]);
 
-  if (loading) {
-    return <div className="text-white">Loading...</div>;
-  }
+  //   if (loading) {
+  //     return <div className="text-white">Loading...</div>;
+  //   }
 
-  if (!user) {
-    return null;
-  }
+  //   if (!user) {
+  //     return null;
+  //   }
 
   return (
     <div className="max-w-[1440px] w-full m-auto p-3">
       <Header onLogoClick={() => setSidebarOpen((prev) => !prev)} />
       <div className="flex justify-between mt-10 gap-5 max-[800px]:flex-col">
         <div
-          className="sticky top-6 max-h-screen overflow-y-auto scrollbar-thin
-            scrollbar-thumb-gray-500 scrollbar-track-gray-800 max-w-[350px] w-full
-            bg-DarkGrey shadow-lg rounded-xl p-7 max-[1000px]:max-w-[250px]
-           max-[800px]:hidden  max-[1000px]:p-3"
+          className="sticky top-6 max-h-[700px] overflow-y-auto scrollbar-thin
+                scrollbar-thumb-gray-500 scrollbar-track-gray-800 max-w-[350px] w-full
+                bg-DarkGrey shadow-lg rounded-xl p-7 max-[1000px]:max-w-[250px]
+            max-[800px]:hidden  max-[1000px]:p-3"
         >
           <SideBar />
         </div>

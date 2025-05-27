@@ -10,14 +10,9 @@ export default function SignInLayout({
 }: {
   children: React.ReactNode;
 }) {
-    
   return (
-    <html lang="en">
-      <body className="antialiased bg-MainBg text-white">
-        <div className="min-h-screen flex items-center justify-center bg-MainBg text-white antialiased">
-          {children}
-        </div>
-      </body>
-    </html>
+    <div className="min-h-screen flex items-center justify-center bg-MainBg text-white antialiased">
+      {children}
+    </div>
   );
 }

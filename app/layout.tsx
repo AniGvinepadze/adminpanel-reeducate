@@ -1,18 +1,15 @@
 
 import ClientLayout from "./components/ClientLayout";
 import "./globals.css";
-import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+
+
 
 export const metadata = {
   title: "Create Next App",
@@ -27,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#151515] text-[#e0dede]`}
+        className={` antialiased bg-[#151515] text-[#e0dede]`}
       >
 <div>
   <ClientLayout >{children}</ClientLayout>

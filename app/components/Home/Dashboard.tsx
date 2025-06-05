@@ -117,7 +117,7 @@ export default function Dashboard() {
       )}
 
       {detailsActive ? (
-        <CoursesDetailsSection />
+        <CoursesDetailsSection handleDelete={handleDelete} />
       ) : (
         <div>
           {courses

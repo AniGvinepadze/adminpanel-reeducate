@@ -1,6 +1,7 @@
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export type CoursesDetail = {
@@ -16,26 +17,36 @@ export type CoursesDetail = {
   courseLittleGoals: string;
 };
 
-export default function CoursesDetailsSection() {
+interface CoursesDetailsSectionProps {
+  handleDelete: (id: string) => Promise<void>;
+}
+
+export default function CoursesDetailsSection({
+  handleDelete,
+}: CoursesDetailsSectionProps) {
   const [coursesDetail, setCoursesDetail] = useState<CoursesDetail[]>([]);
 
   const token = getCookie("accessToken") as string;
 
+  const fetchData = async () => {
+    try {
+      const response = await axiosInstance.get("/courses", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCoursesDetail(response.data);
+    } catch (error) {
+      console.log("Error fetching courses");
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get("/courses", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setCoursesDetail(response.data);
-      } catch (error) {
-        console.log("Error fetching courses");
-      }
-    };
     fetchData();
-  }, [token]);
+  }, [token]); 
+   const handleCourseDelete = async (id: string) => {
+    await handleDelete(id); 
+    fetchData();
+  };
 
   const isValidCourse = (course: CoursesDetail) => {
     return (
@@ -48,6 +59,7 @@ export default function CoursesDetailsSection() {
       course.courseLittleGoals
     );
   };
+  const router = useRouter();
 
   return (
     <div>
@@ -130,6 +142,18 @@ export default function CoursesDetailsSection() {
                 </div>
               </div>
             </div>
+            <button
+              className="w-full bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+              onClick={() => handleCourseDelete(el._id)}
+            >
+              Delete
+            </button>
+            <button
+              className="w-full bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+              onClick={() => router.push(`/courses/${el._id}`)}
+            >
+              Edit
+            </button>
           </div>
         );
       })}

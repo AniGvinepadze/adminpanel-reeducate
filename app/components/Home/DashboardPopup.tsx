@@ -21,7 +21,6 @@ export default function DashboardPopup({
   const [user, setUser] = useState();
   const [formData, setFormData] = useState({
     name: "",
-    link: "",
     images: [],
     category: "",
   });
@@ -86,7 +85,6 @@ export default function DashboardPopup({
     try {
       const data = new FormData();
       data.append("name", formData.name);
-      data.append("link", formData.link);
       data.append("category", formData.category);
 
       if (selectedFile) {
@@ -150,20 +148,6 @@ export default function DashboardPopup({
             />
           </div>
 
-          <div>
-            <label htmlFor="images" className="block text-sm font-medium">
-              Link
-            </label>
-            <input
-              id="link"
-              name="link"
-              value={formData.link}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter Link"
-              className="mt-1 block w-full border  text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black  sm:text-sm p-2"
-            />
-          </div>
           <div>
             <label htmlFor="images" className="block text-sm font-medium">
               Upload Image

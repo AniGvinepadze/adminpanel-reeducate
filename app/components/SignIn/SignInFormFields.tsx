@@ -105,7 +105,7 @@ export default function SignInFormFields() {
         <p className="font-normal text-xs my-2  text-gray-200 ">Password</p>
 
         <input
-          type="text"
+          type="password"
           placeholder="Enter your password"
           className={` px-3 py-[10px] bg-gray-100  text-gray-600   w-full border rounded-lg focus:outline-none focus:ring-1 focus:ring-MainPurple  focus:shadow-lg ${
             errors.email ? "input-error" : ""

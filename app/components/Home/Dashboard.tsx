@@ -113,10 +113,9 @@ export default function Dashboard() {
       )}
 
       {detailsActive ? (
-        <CoursesDetailsSection/>
+        <CoursesDetailsSection />
       ) : (
         <div>
-       
           {courses.map((el) => (
             <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
               <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[600px]:gap-2 max-[550px]:flex-col">
@@ -137,7 +136,7 @@ export default function Dashboard() {
                   )}
                 </div>
 
-                <div className="max-w-[900px] w-full p-3 max-[600px]:p-0">
+                <div className="max-w-[900px] w-full p-3 max-[600px]:p-0 mt-10">
                   <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
                     <p className="p-2 font-medium text-sm">Name</p>
                     <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
@@ -148,12 +147,6 @@ export default function Dashboard() {
                     <p className="p-2 font-medium text-sm">Category</p>
                     <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
                       {el.category}
-                    </p>
-                  </div>
-                  <div className="w-full max-w-[800px] ">
-                    <p className="p-2 font-medium text-sm">Link</p>
-                    <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
-                      {el.link}
                     </p>
                   </div>
                 </div>

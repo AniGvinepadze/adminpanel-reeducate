@@ -84,6 +84,21 @@ const DetailPopup = ({
       </div>
 
       <div>
+        <label htmlFor="courseDuration" className="block text-sm font-medium">
+          Course Duration
+        </label>
+        <input
+          id="courseDuration"
+          name="courseDuration"
+          value={formData.courseDuration}
+          onChange={handleChange}
+          type="text"
+          placeholder="e.g. UI/UX"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black text-gray-700 sm:text-sm p-2"
+        />
+      </div>
+
+      <div>
         <label htmlFor="coursePrice" className="block text-sm font-medium">
           Course Price
         </label>
@@ -164,7 +179,7 @@ const DetailPopup = ({
         />
       </div>
 
-      {/* <div>
+      <div>
         <label htmlFor="images" className="block text-sm font-medium">
           Upload Image
         </label>
@@ -177,7 +192,7 @@ const DetailPopup = ({
           placeholder="Upload image"
           className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
         />
-      </div> */}
+      </div>
       <div className="flex justify-end gap-4 mt-6">
         <button
           type="submit"

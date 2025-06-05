@@ -4,6 +4,8 @@ import { Courses } from "./Dashboard";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
+import MainPopup from "@/app/common/popups/MainPopup";
+import DetailPopup from "@/app/common/popups/DetailsPopup";
 
 type DashboardPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +25,17 @@ export default function DashboardPopup({
     name: "",
     images: [],
     category: "",
+    courseTitle: "",
+    courseQuantity: "",
+    courseDuration: "",
+    coursePrice: "",
+    courseDescription: "",
+    courseLittleGoals: "",
+    courseSyllabus: "",
+    courseGoal: "",
   });
+  const [mainActive, setMainActive] = useState(true);
+  const [detailsActive, setDetailsActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -100,78 +112,64 @@ export default function DashboardPopup({
       setIsAddModalOpen(false);
     } catch (error) {}
   };
-
+  const handleMainOnClick = () => {
+    setMainActive(true);
+    setDetailsActive(false);
+  };
+  const handleDetailOnClick = () => {
+    setMainActive(false);
+    setDetailsActive(true);
+  };
   return (
     <div>
       <div
         ref={modalRef}
         className="bg-[#535353] shadow-xl  rounded-lg   max-w-[560px] w-full p-6  inset-0 z-50 max-[1100px]:left-20"
       >
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Add New Course</h2>
-          <button
-            onClick={() => setIsAddModalOpen(false)}
-            className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
-          >
-            +
-          </button>
+        <div className="flex justify-center items-center">
+          <div>
+            <div className="flex gap-5 justify-center">
+              <button
+                className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+                  mainActive ? "bg-MainBg" : ""
+                }
+          `}
+                onClick={handleMainOnClick}
+              >
+                მთავარი
+              </button>
+              <button
+                className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+                  detailsActive ? "bg-MainBg" : ""
+                }
+          `}
+                onClick={handleDetailOnClick}
+              >
+                დეტალები
+              </button>
+            </div>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter course name"
-              className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="category" className="block text-sm font-medium ">
-              Category
-            </label>
-            <input
-              id="category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              type="text"
-              placeholder="e.g. UI/UX"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black text-gray-700 sm:text-sm p-2"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="images" className="block text-sm font-medium">
-              Upload Image
-            </label>
-            <input
-              id="images"
-              name="images"
-              onChange={handleFileChange}
-              type="file"
-              accept="image/*"
-              placeholder="Upload image"
-              className="mt-1 block w-full border  text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black  sm:text-sm p-2"
-            />
-          </div>
-
-          <div className="flex justify-end gap-4 mt-6">
-            <button
-              type="submit"
-              className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
-            >
-              Add Course
-            </button>
-          </div>
-        </form>
+        {mainActive ? (
+          <MainPopup
+            formData={formData}
+            handleChange={handleChange}
+            handleFileChange={handleFileChange}
+            handleSubmit={handleSubmit}
+          />
+        ) : (
+          <DetailPopup
+            formData={formData}
+            handleChange={handleChange}
+            selectedFile={selectedFile}
+            token={token}
+            courses={courses}
+            setCourses={setCourses}
+            setIsAddModalOpen={setIsAddModalOpen}
+            handleFileChange={handleFileChange}
+          />
+        )}
       </div>
     </div>
   );

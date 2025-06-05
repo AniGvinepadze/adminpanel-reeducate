@@ -17,6 +17,7 @@ export type FormData = {
 
 export default function SignInFormFields() {
   const [error, setError] = useState<null | string>(null);
+  const [loading,setLoading] = useState(false)
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -48,6 +49,7 @@ export default function SignInFormFields() {
     }
   }, [searchParams]);
   const onSubmit = async (formData: FormData) => {
+    setLoading(true)
     setError(null);
 
     try {
@@ -131,7 +133,7 @@ export default function SignInFormFields() {
           className="w-full text-white bg-MainBg bg-MainPurple font-medium text-base p-2 rounded-lg cursor-pointer hover:scale-105 hover:bg-[#3b3a3a] transition-all ease-in-out duration-300 my-3"
           type="submit"
         >
-          Login
+        { loading ? "Sign in..." : "Sign-in"}
         </button>
       </div>
     </form>

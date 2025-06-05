@@ -104,7 +104,7 @@ const AboutUsPopup: FC<AboutUsPopupProps> = ({
         setIsAddModalOpen(false);
       }
     } catch (error) {
-      // You might want to handle the error here
+
       console.error(error);
     }
   };

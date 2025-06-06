@@ -65,8 +65,10 @@ export default function Dashboard() {
     setDetailsActive(true);
   };
 
+  const handleAddCourse = (newCourse: Courses) => {
+    setCourses((prevCourses) => [...prevCourses, newCourse]);
+  };
   const router = useRouter();
-
 
   const isValidCourse = (course: Courses) => {
     return course.name && course.category && course.images.length > 0;
@@ -112,6 +114,7 @@ export default function Dashboard() {
             isAddModalOpen={isAddModalOpen}
             courses={courses}
             setCourses={setCourses}
+            handleAddCourse={handleAddCourse}
           />
         </div>
       )}
@@ -120,56 +123,54 @@ export default function Dashboard() {
         <CoursesDetailsSection handleDelete={handleDelete} />
       ) : (
         <div>
-          {courses
-            .filter(isValidCourse) 
-            .map((el) => (
-              <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
-                <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[600px]:gap-2 max-[550px]:flex-col">
-                  <div className="flex-shrink-0 h-full overflow-hidden">
-                    {el.images && el.images.length > 0 ? (
-                      <div className="h-full max-w-[450px] w-full rounded">
-                        <Image
-                          src={`https://d1monaii5gqb9o.cloudfront.net/${el.images[0]}`}
-                          alt="image"
-                          width={410}
-                          height={150}
-                          className="object-cover rounded-md min-h-[250px] max-w-[250px] max-[550px]:max-w-[410px] max-[550px]:max-h-[150px]"
-                        />
-                      </div>
-                    ) : (
-                      <p>No image</p>
-                    )}
-                  </div>
+          {courses.filter(isValidCourse).map((el) => (
+            <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
+              <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[600px]:gap-2 max-[550px]:flex-col">
+                <div className="flex-shrink-0 h-full overflow-hidden">
+                  {el.images && el.images.length > 0 ? (
+                    <div className="h-full max-w-[450px] w-full rounded">
+                      <Image
+                        src={`https://d1monaii5gqb9o.cloudfront.net/${el.images[0]}`}
+                        alt="image"
+                        width={410}
+                        height={150}
+                        className="object-cover rounded-md min-h-[250px] max-w-[250px] max-[550px]:max-w-[410px] max-[550px]:max-h-[150px]"
+                      />
+                    </div>
+                  ) : (
+                    <p>No image</p>
+                  )}
+                </div>
 
-                  <div className="max-w-[900px] w-full p-3 max-[600px]:p-0 mt-10">
-                    <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
-                      <p className="p-2 font-medium text-sm">Name</p>
-                      <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
-                        {el.name}
-                      </p>
-                    </div>
-                    <div className="w-full max-w-[800px] ">
-                      <p className="p-2 font-medium text-sm">Category</p>
-                      <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
-                        {el.category}
-                      </p>
-                    </div>
+                <div className="max-w-[900px] w-full p-3 max-[600px]:p-0 mt-10">
+                  <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
+                    <p className="p-2 font-medium text-sm">Name</p>
+                    <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                      {el.name}
+                    </p>
+                  </div>
+                  <div className="w-full max-w-[800px] ">
+                    <p className="p-2 font-medium text-sm">Category</p>
+                    <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                      {el.category}
+                    </p>
                   </div>
                 </div>
-                <button
-                  className="w-full bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
-                  onClick={() => handleDelete(el._id)}
-                >
-                  Delete
-                </button>
-                <button
-                  className="w-full bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
-                  onClick={() => router.push(`/courses/${el._id}`)}
-                >
-                  Edit
-                </button>
               </div>
-            ))}
+              <button
+                className="w-full bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+                onClick={() => handleDelete(el._id)}
+              >
+                Delete
+              </button>
+              <button
+                className="w-full bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+                onClick={() => router.push(`/courses/${el._id}`)}
+              >
+                Edit
+              </button>
+            </div>
+          ))}
         </div>
       )}
     </div>

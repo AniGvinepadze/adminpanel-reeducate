@@ -1,7 +1,7 @@
 "use client";
 import { Courses } from "@/app/components/Home/Dashboard";
 import { axiosInstance } from "@/app/lib/axiosIntance";
-import React from "react";
+import React, { useEffect } from "react";
 
 type DetailPopupProps = {
   formData: any;
@@ -12,6 +12,7 @@ type DetailPopupProps = {
   selectedFile: File | null;
   token: string;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAddCourse: (newCourse: Courses) => void;
 };
 
 const DetailPopup = ({
@@ -23,7 +24,12 @@ const DetailPopup = ({
   token,
   setIsAddModalOpen,
   handleFileChange,
+  handleAddCourse,
 }: DetailPopupProps) => {
+  useEffect(() => {
+    console.log("Courses updated", courses);
+  }, [courses]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -47,10 +53,17 @@ const DetailPopup = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      setCourses((prev) => [...prev, response.data]);
+
+      // setCourses((prevCourses) => [...prevCourses, response.data]);
+        handleAddCourse(response.data);
+
+
       setIsAddModalOpen(false);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error adding course:", error);
+    }
   };
+
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
       <div>

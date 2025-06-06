@@ -12,11 +12,13 @@ type DashboardPopupProps = {
   isAddModalOpen: boolean;
   courses: Courses[];
   setCourses: React.Dispatch<React.SetStateAction<Courses[]>>;
+    handleAddCourse: (newCourse: Courses) => void;
 };
 
 export default function DashboardPopup({
   setIsAddModalOpen,
   isAddModalOpen,
+    handleAddCourse,
   courses,
   setCourses,
 }: DashboardPopupProps) {
@@ -168,6 +170,7 @@ export default function DashboardPopup({
             setCourses={setCourses}
             setIsAddModalOpen={setIsAddModalOpen}
             handleFileChange={handleFileChange}
+            handleAddCourse={handleAddCourse}
           />
         )}
       </div>

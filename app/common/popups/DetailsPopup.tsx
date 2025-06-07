@@ -194,6 +194,11 @@ const DetailPopup = ({
 
       <div>
         <label htmlFor="images" className="block text-sm font-medium">
+
+
+
+
+          
           Upload Image
         </label>
         <input

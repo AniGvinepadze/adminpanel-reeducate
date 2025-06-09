@@ -144,7 +144,13 @@ export default function EditCoursePage() {
         <div />
       </div>
       {detailsActive ? (
-        <DetailsEditSecction id={id} getCurrentUser={getCurrentUser} token={token} handleImageChange={handleImageChange}  previewImageUrl={previewImageUrl} setPreviewImageUrl={setPreviewImageUrl}/>
+        <DetailsEditSecction
+          id={id}
+          getCurrentUser={getCurrentUser}
+          token={token}
+          previewImageUrl={previewImageUrl}
+          setPreviewImageUrl={setPreviewImageUrl}
+        />
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           {["name", "category"].map((field) => (

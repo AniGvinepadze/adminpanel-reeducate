@@ -1,5 +1,5 @@
 "use client";
-import BlogsPopup from "@/app/common/popups/BlogsPopup";
+import BlogsPopup from "@/app/components/Blogs/BlogsPopup";
 import WhyUsPopup from "@/app/common/popups/WhyUsPopup";
 import BlogsDetailsSection from "@/app/components/Blogs/BlogsDetailsSection";
 import { axiosInstance } from "@/app/lib/axiosIntance";
@@ -7,6 +7,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 export type Blogs = {
   _id: string;
@@ -82,6 +83,9 @@ export default function page() {
     setMainActive(false);
     setDetailsActive(true);
   };
+  const handleAddCourse = (newBlog: Blogs) => {
+    setBlog((prevBlogs) => [...prevBlogs, newBlog]);
+  };
 
   const router = useRouter();
 
@@ -130,46 +134,66 @@ export default function page() {
               isAddModalOpen={isAddModalOpen}
               blog={blog}
               setBlog={setBlog}
+              handleAddCourse={handleAddCourse}
             />
           </div>
         )}
       </div>
-    {detailsActive ? (<div>
-      <BlogsDetailsSection handleDelete={handleDelete}/>
-    </div>) : (  <div>
-      {blog.map((el) => (
-        <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
-          <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[1100px]:gap-2 max-[550px]:flex-col">
-            <div className=" w-full py-3 px-3 max-[950px]:px-0">
-              <div className="w-full max-w-[1000px]">
-                <p className="p-2 font-medium text-sm">Title</p>
-                <p className="text-base font-medium w-full bg-DarkGrey  p-2 rounded-xl">
-                  {el.title}
-                </p>
-              </div>
-              <div className="w-full m my-4">
-                <p className="p-2 font-medium text-sm">Description</p>
-                <p className="text-base font-medium w-full bg-DarkGrey max-w-[1000px] p-2 rounded-xl">
-                  {el.description}
-                </p>
-              </div>
-            </div>
-          </div>
-          <button
-            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
-            onClick={() => handleDelete(el._id)}
-          >
-            Delete
-          </button>
-          <button
-            className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
-            onClick={() => router.push(`/blog/${el._id}`)}
-          >
-            Edit
-          </button>
+      {detailsActive ? (
+        <div>
+          <BlogsDetailsSection handleDelete={handleDelete} />
         </div>
-      ))}
-      </div>)}
+      ) : (
+        <div>
+          {blog.map((el) => (
+            <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
+              <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[1100px]:gap-2 max-[550px]:flex-col">
+                <div className="flex-shrink-0 h-full overflow-hidden">
+                  {el.images && el.images.length > 0 ? (
+                    <div className="h-full max-w-[450px] w-full rounded">
+                      <Image
+                        src={`https://d1monaii5gqb9o.cloudfront.net/${el.images[0]}`}
+                        alt="image"
+                        width={410}
+                        height={150}
+                        className="object-cover rounded-md min-h-[250px] max-w-[250px] max-[550px]:max-w-[410px] max-[550px]:max-h-[150px]"
+                      />
+                    </div>
+                  ) : (
+                    <p>No image</p>
+                  )}
+                </div>
+                <div className=" w-full py-3 px-3 max-[950px]:px-0">
+                  <div className="w-full max-w-[1000px]">
+                    <p className="p-2 font-medium text-sm">Title</p>
+                    <p className="text-base font-medium w-full bg-DarkGrey  p-2 rounded-xl">
+                      {el.title}
+                    </p>
+                  </div>
+                  <div className="w-full m my-4">
+                    <p className="p-2 font-medium text-sm">Description</p>
+                    <p className="text-base font-medium w-full bg-DarkGrey max-w-[1000px] p-2 rounded-xl">
+                      {el.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button
+                className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+                onClick={() => handleDelete(el._id)}
+              >
+                Delete
+              </button>
+              <button
+                className="w-full  bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
+                onClick={() => router.push(`/blog/${el._id}`)}
+              >
+                Edit
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

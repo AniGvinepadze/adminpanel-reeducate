@@ -1,5 +1,5 @@
 "use client";
-import BlogsPopup from "@/app/common/popups/BlogsPopup";
+import BlogsPopup from "@/app/components/Blogs/BlogsPopup";
 import FaqPopup from "@/app/common/popups/FaqPopup";
 import WhyUsPopup from "@/app/common/popups/WhyUsPopup";
 import { axiosInstance } from "@/app/lib/axiosIntance";

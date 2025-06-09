@@ -5,18 +5,22 @@ import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import MainBlogPopup from "./MainBlogPopup";
+import BlogsDetailsPopup from "./BlogsDetailsPopup";
 
 type BlogsPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isAddModalOpen: boolean;
   blog: Blogs[];
   setBlog: React.Dispatch<React.SetStateAction<Blogs[]>>;
+  handleAddCourse: (newblog: Blogs) => void;
 };
 export default function BlogsPopup({
   setIsAddModalOpen,
   isAddModalOpen,
   blog,
   setBlog,
+  handleAddCourse,
 }: BlogsPopupProps) {
   const token = getCookie("accessToken") as string;
 
@@ -24,7 +28,11 @@ export default function BlogsPopup({
   const [formData, setFormData] = useState({
     description: "",
     title: "",
+    images: [],
   });
+  const [mainActive, setMainActive] = useState(true);
+  const [detailsActive, setDetailsActive] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -64,6 +72,11 @@ export default function BlogsPopup({
     getCurrentUser();
   }, [token, router]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedFile(e.target.files[0]);
+    }
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -76,7 +89,15 @@ export default function BlogsPopup({
     e.preventDefault();
 
     try {
-      const response = await axiosInstance.post("/blogs", formData, {
+      const data = new FormData();
+      data.append("description", formData.description);
+      data.append("title", formData.title);
+
+      if (selectedFile) {
+        data.append("img", selectedFile);
+      }
+
+      const response = await axiosInstance.post("/blogs", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,6 +107,14 @@ export default function BlogsPopup({
     } catch (error) {}
   };
 
+  const handleMainOnClick = () => {
+    setMainActive(true);
+    setDetailsActive(false);
+  };
+  const handleDetailOnClick = () => {
+    setMainActive(false);
+    setDetailsActive(true);
+  };
   return (
     <div>
       <div
@@ -93,7 +122,27 @@ export default function BlogsPopup({
         className="bg-[#535353] shadow-xl  rounded-lg  max-w-[560px] w-full p-6"
       >
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Add New Blog</h2>
+          <div></div>
+          <div className="flex gap-5 justify-center">
+            <button
+              className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+                mainActive ? "bg-MainBg" : ""
+              }
+          `}
+              onClick={handleMainOnClick}
+            >
+              მთავარი
+            </button>
+            <button
+              className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+                detailsActive ? "bg-MainBg" : ""
+              }
+          `}
+              onClick={handleDetailOnClick}
+            >
+              დეტალები
+            </button>
+          </div>
           <button
             onClick={() => setIsAddModalOpen(false)}
             className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
@@ -102,51 +151,19 @@ export default function BlogsPopup({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium">
-              Title
-            </label>
-            <input
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter course name"
-              className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
-            />
-          </div>
-          <div>
+        {mainActive ? (
+          <MainBlogPopup
+            formData={formData}
+            handleChange={handleChange}
+            handleFileChange={handleFileChange}
+            handleSubmit={handleSubmit}
+          />
+        ) : (
+          <BlogsDetailsPopup 
 
-            <div>
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium mt-4"
-              >
-                Description
-              </label>
-              <input
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                type="text"
-                placeholder="Enter course name"
-                className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
-              />
-            </div>
+          />
+        )}
 
-            <div className="flex justify-end gap-4 mt-6">
-              <button
-                type="submit"
-                className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
-              >
-                Add Blog
-              </button>
-            </div>
-          </div>
-        </form>
       </div>
     </div>
   );

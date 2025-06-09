@@ -4,8 +4,8 @@ import { Courses } from "./Dashboard";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
-import MainPopup from "@/app/common/popups/MainPopup";
-import DetailPopup from "@/app/common/popups/DetailsPopup";
+import MainPopup from "@/app/components/Home/MainPopup";
+import DetailPopup from "@/app/components/Home/DetailsPopup";
 
 type DashboardPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;

@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { Blogs } from "../page";
+import BlogsDetailsPopup from "@/app/components/Blogs/BlogsDetailsPopup";
+import BlogDetailsEditSection from "@/app/components/Blogs/BlogDetailsEditSection";
 
 export default function page() {
   const router = useRouter();
@@ -106,13 +108,13 @@ export default function page() {
       console.error("Failed to update course", error);
     }
   };
-    if (!blog) return <p>Loading...</p>;
+  if (!blog) return <p>Loading...</p>;
 
   return (
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
-       <div className="flex justify-between">
-      <h1 className="text-2xl font-bold mb-4">Edit Blog</h1>
-          <div className="flex gap-5">
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold mb-4">Edit Blog</h1>
+        <div className="flex gap-5">
           <button
             className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
               mainActive ? "bg-MainBg" : ""
@@ -129,29 +131,37 @@ export default function page() {
           >
             დეტალები
           </button>
-         
         </div>
         <div></div>
-        </div>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 mt-8">
-        {["description", "title"].map((field) => (
-          <div key={field}>
-            <label
-              htmlFor={field}
-              className="block mb-1 font-medium capitalize p-1"
-            >
-              {field}
-            </label>
-            <input
-              id={field}
-              name={field}
-              value={(formData as any)[field]}
-              onChange={handleChange}
-              className="w-full border text-gray-700 border-gray-300 rounded-xl px-3 py-2"
-            />
-          </div>
-        ))}
+      {detailsActive ? (
+        <BlogDetailsEditSection
+          id={id}
+          getCurrentUser={getCurrentUser}
+          token={token}
+          previewImageUrl={previewImageUrl}
+          setPreviewImageUrl={setPreviewImageUrl}
+        />
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4 mt-8">
+          {["description", "title"].map((field) => (
+            <div key={field}>
+              <label
+                htmlFor={field}
+                className="block mb-1 font-medium capitalize p-1"
+              >
+                {field}
+              </label>
+              <input
+                id={field}
+                name={field}
+                value={(formData as any)[field]}
+                onChange={handleChange}
+                className="w-full border text-gray-700 border-gray-300 rounded-xl px-3 py-2"
+              />
+            </div>
+          ))}
           <div>
             <label
               htmlFor="image"
@@ -178,13 +188,14 @@ export default function page() {
             )}
           </div>
 
-        <button
-          type="submit"
-          className="mt-6 px-4 py-2 w-full my-2 bg-MainBg text-base font-medium text-white rounded-lg hover:bg-[#0f0f0f] hover:scale-105 transition-all ease-in-out duration-300"
-        >
-          Save Changes
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="mt-6 px-4 py-2 w-full my-2 bg-MainBg text-base font-medium text-white rounded-lg hover:bg-[#0f0f0f] hover:scale-105 transition-all ease-in-out duration-300"
+          >
+            Save Changes
+          </button>
+        </form>
+      )}
     </div>
   );
 }

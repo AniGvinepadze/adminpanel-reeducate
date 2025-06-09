@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
+import DetailsEditSecction from "@/app/components/Home/DetailsEditSecction";
 
 type Course = {
   _id: string;
@@ -16,6 +17,8 @@ type Course = {
 export default function EditCoursePage() {
   const router = useRouter();
   const pathname = usePathname();
+  const [mainActive, setMainActive] = useState(true);
+  const [detailsActive, setDetailsActive] = useState(false);
   const id = pathname.split("/").pop() || "";
 
   const [user, setUser] = useState();
@@ -30,6 +33,15 @@ export default function EditCoursePage() {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const token = getCookie("accessToken") as string;
 
+  const handleMainOnClick = () => {
+    setMainActive(true);
+    setDetailsActive(false);
+  };
+
+  const handleDetailOnClick = () => {
+    setMainActive(false);
+    setDetailsActive(true);
+  };
   const getCurrentUser = async (token: string) => {
     try {
       const response = await axiosInstance.get("/auth/current-admin", {
@@ -109,59 +121,84 @@ export default function EditCoursePage() {
 
   return (
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Course</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {["name", "category"].map((field) => (
-          <div key={field}>
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-bold mb-4">Edit Course</h1>
+        <div className="flex gap-5">
+          <button
+            className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+              mainActive ? "bg-MainBg" : ""
+            }`}
+            onClick={handleMainOnClick}
+          >
+            მთავარი
+          </button>
+          <button
+            className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+              detailsActive ? "bg-MainBg" : ""
+            }`}
+            onClick={handleDetailOnClick}
+          >
+            დეტალები
+          </button>
+        </div>
+        <div />
+      </div>
+      {detailsActive ? (
+        <DetailsEditSecction/>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {["name", "category"].map((field) => (
+            <div key={field}>
+              <label
+                htmlFor={field}
+                className="block mb-1 font-medium capitalize p-1"
+              >
+                {field}
+              </label>
+              <input
+                id={field}
+                name={field}
+                value={(formData as any)[field]}
+                onChange={handleChange}
+                className="w-full border text-gray-700 border-gray-300 rounded-xl px-3 py-2"
+              />
+            </div>
+          ))}
+
+          <div>
             <label
-              htmlFor={field}
+              htmlFor="image"
               className="block mb-1 font-medium capitalize p-1"
             >
-              {field}
+              Image
             </label>
             <input
-              id={field}
-              name={field}
-              value={(formData as any)[field]}
-              onChange={handleChange}
-              className="w-full border text-gray-700 border-gray-300 rounded-xl px-3 py-2"
+              type="file"
+              id="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full"
             />
+            {previewImageUrl && (
+              <div className="mt-2">
+                <img
+                  src={previewImageUrl}
+                  alt="Preview"
+                  className="max-w-xs max-h-40 object-contain rounded"
+                />
+                <p className="text-sm break-all">{previewImageUrl}</p>
+              </div>
+            )}
           </div>
-        ))}
 
-        <div>
-          <label
-            htmlFor="image"
-            className="block mb-1 font-medium capitalize p-1"
+          <button
+            type="submit"
+            className="mt-6 px-4 py-2 w-full my-2 bg-MainBg text-base font-medium text-white rounded-lg hover:bg-[#0f0f0f] hover:scale-105 transition-all ease-in-out duration-300"
           >
-            Image
-          </label>
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="w-full"
-          />
-          {previewImageUrl && (
-            <div className="mt-2">
-              <img
-                src={previewImageUrl}
-                alt="Preview"
-                className="max-w-xs max-h-40 object-contain rounded"
-              />
-              <p className="text-sm break-all">{previewImageUrl}</p>
-            </div>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          className="mt-6 px-4 py-2 w-full my-2 bg-MainBg text-base font-medium text-white rounded-lg hover:bg-[#0f0f0f] hover:scale-105 transition-all ease-in-out duration-300"
-        >
-          Save Changes
-        </button>
-      </form>
+            Save Changes
+          </button>
+        </form>
+      )}
     </div>
   );
 }

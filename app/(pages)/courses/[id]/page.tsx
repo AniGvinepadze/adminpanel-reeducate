@@ -23,7 +23,6 @@ export default function EditCoursePage() {
   const [formData, setFormData] = useState({
     name: "",
     category: "",
-    link: "",
     img: "",
     imageFile: null as File | null,
   });
@@ -54,7 +53,6 @@ export default function EditCoursePage() {
         setFormData({
           name: courseData.name,
           category: courseData.category,
-          link: courseData.link,
           img: courseData.images?.[0] || "",
           imageFile: null,
         });
@@ -89,7 +87,6 @@ export default function EditCoursePage() {
     const formDataToSend = new FormData();
     formDataToSend.append("name", formData.name);
     formDataToSend.append("category", formData.category);
-    formDataToSend.append("link", formData.link);
 
     if (formData.imageFile) {
       formDataToSend.append("img", formData.imageFile);
@@ -114,7 +111,7 @@ export default function EditCoursePage() {
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Course</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {["name", "category", "link"].map((field) => (
+        {["name", "category"].map((field) => (
           <div key={field}>
             <label
               htmlFor={field}

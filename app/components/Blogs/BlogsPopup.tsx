@@ -160,7 +160,15 @@ export default function BlogsPopup({
           />
         ) : (
           <BlogsDetailsPopup 
-
+           formData={formData}
+            handleChange={handleChange}
+            selectedFile={selectedFile}
+            token={token}
+            blog={blog}
+            setBlog={setBlog}
+            setIsAddModalOpen={setIsAddModalOpen}
+            handleFileChange={handleFileChange}
+            handleAddCourse={handleAddCourse}
           />
         )}
 

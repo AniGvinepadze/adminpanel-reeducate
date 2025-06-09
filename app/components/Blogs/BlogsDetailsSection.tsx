@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 export type BlogsDetail = {
   _id: string;
   images: string[];
-  blogsDescription: string;
+  blogDescription: string;
 };
 
 interface BlogsDetailsSectionProps {
@@ -42,7 +42,7 @@ export default function BlogsDetailsSection({
   };
 
   const isValidCourse = (blog: BlogsDetail) => {
-    return blog.blogsDescription;
+    return blog.blogDescription;
   };
   const router = useRouter();
 
@@ -76,7 +76,7 @@ export default function BlogsDetailsSection({
                   <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
                     <p className="p-2 font-medium text-sm">blogs description</p>
                     <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
-                      {el.blogsDescription}
+                      {el.blogDescription}
                     </p>
                   </div>
                 

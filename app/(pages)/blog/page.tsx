@@ -145,7 +145,7 @@ export default function page() {
         </div>
       ) : (
         <div>
-          {blog.map((el) => (
+             {blog.filter(isValidCourse).map((el) => (
             <div key={el._id} className="max-w-[1000px] w-full mb-10 mt-5">
               <div className="max-w-[1000px] w-full bg-MainBg rounded-xl flex gap-6 p-3 max-[1100px]:gap-2 max-[550px]:flex-col">
                 <div className="flex-shrink-0 h-full overflow-hidden">

@@ -93,7 +93,7 @@ export default function BlogsDetailsSection({
             </button>
             <button
               className="w-full bg-MainBg rounded-xl flex justify-center text-base font-medium gap-4 py-3 px-6 my-3 hover:scale-105 ease-in-out duration-300 transition-all"
-              onClick={() => router.push(`/blogs/${el._id}`)}
+              onClick={() => router.push(`/blog/${el._id}`)}
             >
               Edit
             </button>

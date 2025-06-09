@@ -15,7 +15,6 @@ export default function page() {
   const [formData, setFormData] = useState({
     description: "",
     title: "",
-    link: "",
   });
   const token = getCookie("accessToken") as string;
 
@@ -29,7 +28,6 @@ export default function page() {
         setFormData({
           description: response.data.description,
           title: response.data.title,
-          link: response.data.link,
         });
       } catch (error) {
         console.error("Failed to load course", error);
@@ -61,7 +59,7 @@ export default function page() {
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Blog</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {["description","title","link"].map((field) => (
+        {["description","title"].map((field) => (
           <div key={field}>
             <label
               htmlFor={field}

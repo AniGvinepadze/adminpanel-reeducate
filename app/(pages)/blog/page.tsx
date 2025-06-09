@@ -17,6 +17,9 @@ export default function page() {
     const [user, setUser] = useState();
   const [blog, setBlog] = useState<Blogs[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [mainActive, setMainActive] = useState(true);
+  const [detailsActive, setDetailsActive] = useState(false);
+
   const token = getCookie("accessToken") as string;
 
   
@@ -70,6 +73,17 @@ export default function page() {
     } catch (error) {
       console.error("Failed to delete course:", error);
     }
+  };
+
+  
+  const handleMainOnClick = () => {
+    setMainActive(true);
+    setDetailsActive(false);
+  };
+
+  const handleDetailOnClick = () => {
+    setMainActive(false);
+    setDetailsActive(true);
   };
 
   const router = useRouter();

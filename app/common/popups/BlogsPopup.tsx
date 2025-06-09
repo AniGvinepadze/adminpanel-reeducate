@@ -24,7 +24,6 @@ export default function BlogsPopup({
   const [formData, setFormData] = useState({
     description: "",
     title: "",
-    link: "",
   });
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -119,18 +118,7 @@ export default function BlogsPopup({
             />
           </div>
           <div>
-            <label htmlFor="link" className="block text-sm font-medium">
-              Link
-            </label>
-            <input
-              id="link"
-              name="link"
-              value={formData.link}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter course name"
-              className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
-            />
+
             <div>
               <label
                 htmlFor="description"

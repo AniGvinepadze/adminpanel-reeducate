@@ -13,14 +13,14 @@ type PartnerPopupProps = {
   isAddModalOpen: boolean;
   partner: Partners[];
   setPartner: React.Dispatch<React.SetStateAction<Partners[]>>;
-  handleAddCourse: (newPartner:Partners ) => void
+  handleAddCourse: (newPartner: Partners) => void;
 };
 
 export default function PartnerPopup({
   setIsAddModalOpen,
   isAddModalOpen,
   partner,
-    handleAddCourse,
+  handleAddCourse,
   setPartner,
 }: PartnerPopupProps) {
   const [user, setUser] = useState();
@@ -99,6 +99,7 @@ export default function PartnerPopup({
 
     try {
       const data = new FormData();
+      data.append("description", formData.description);
 
       if (selectedFile) {
         data.append("img", selectedFile);

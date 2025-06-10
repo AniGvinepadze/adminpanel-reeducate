@@ -2,6 +2,7 @@
 
 import AboutUsPopup from "@/app/common/popups/AboutUsPopup";
 import PartnerPopup from "@/app/common/popups/PartnerPopup";
+import PartnersDetailsSection from "@/app/components/Partners/PartnersDetailsSection";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import Image from "next/image";
@@ -18,6 +19,8 @@ export default function page() {
   const [user, setUser] = useState();
   const [partner, setPartner] = useState<Partners[]>([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [mainActive, setMainActive] = useState(true);
+  const [detailsActive, setDetailsActive] = useState(false);
   const token = getCookie("accessToken") as string;
 
   const router = useRouter();
@@ -73,6 +76,20 @@ export default function page() {
     }
   };
 
+  const handleMainOnClick = () => {
+    setMainActive(true);
+    setDetailsActive(false);
+  };
+
+  const handleDetailOnClick = () => {
+    setMainActive(false);
+    setDetailsActive(true);
+  };
+
+  const isValidCourse = (partner: Partners) => {
+    return partner.description || partner.images.length > 0;
+  };
+
   return (
     <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7  max-[500px]:p-3">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
@@ -80,6 +97,24 @@ export default function page() {
           <h1 className="text-2xl font-bold mb-4 max-[400px]:text-xl">
             პარტნიორები
           </h1>
+        </div>
+           <div className="flex gap-5">
+          <button
+            className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+              mainActive ? "bg-MainBg" : ""
+            }`}
+            onClick={handleMainOnClick}
+          >
+            მთავარი
+          </button>
+          <button
+            className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+              detailsActive ? "bg-MainBg" : ""
+            }`}
+            onClick={handleDetailOnClick}
+          >
+            დეტალები
+          </button>
         </div>
         <button
           className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[500px]:py-1 max-[400px]:px-4
@@ -100,50 +135,55 @@ export default function page() {
           />
         </div>
       )}
-      <div className="max-[450px]:flex max-[450px]:justify-center ">
-        <div className="grid grid-cols-3 gap-3 max-[1050px]:grid-cols-2 max-[450px]:grid-cols-1 ">
-          {partner.map((el) => (
-            <div key={el._id} className="flex flex-col gap-1 max-w-[275px] ">
-              <div className=" bg-MainBg rounded-xl flex flex-col  justify-between gap-4 p-3 my-3">
-                {el.images && el.images.length > 0 ? (
-                  <div className="h-full max-w-[450px] w-full rounded">
-                    <Image
-                      src={`https://d1monaii5gqb9o.cloudfront.net/${el.images[0]}`}
-                      alt="image"
-                      width={250}
-                      height={250}
-                      className="object-cover rounded-md min-h-[250px] max-w-[250px] w-full  "
-                    />
-                  </div>
-                ) : (
-                  <p>No image</p>
-                )}
-                <div className="max-w-[900px] w-full py-3 px-3 max-[950px]:px-0">
-                  <div className="w-full max-w-[800px] mb-3 ">
-                    <p className="p-2 font-medium text-sm">Description</p>
-                    <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
-                      {el.description}
-                    </p>
+
+      {detailsActive ? (
+        <PartnersDetailsSection />
+      ) : (
+        <div className="max-[450px]:flex max-[450px]:justify-center ">
+          <div className="grid grid-cols-3 gap-3 max-[1050px]:grid-cols-2 max-[450px]:grid-cols-1 ">
+            {partner.filter(isValidCourse).map((el) => (
+              <div key={el._id} className="flex flex-col gap-1 max-w-[275px] ">
+                <div className=" bg-MainBg rounded-xl flex flex-col  justify-between gap-4 p-3 my-3">
+                  {el.images && el.images.length > 0 ? (
+                    <div className="h-full max-w-[450px] w-full rounded">
+                      <Image
+                        src={`https://d1monaii5gqb9o.cloudfront.net/${el.images[0]}`}
+                        alt="image"
+                        width={250}
+                        height={250}
+                        className="object-cover rounded-md min-h-[250px] max-w-[250px] w-full  "
+                      />
+                    </div>
+                  ) : (
+                    <p>No image</p>
+                  )}
+                  <div className="max-w-[900px] w-full py-3 px-3 max-[950px]:px-0">
+                    <div className="w-full max-w-[800px] mb-3 ">
+                      <p className="p-2 font-medium text-sm">Description</p>
+                      <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                        {el.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <button
-                className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6  hover:scale-110 ease-in-out duration-300 transition-all"
-                onClick={() => handleDelete(el._id)}
-              >
-                Delete
-              </button>
-              <button
-                className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6 my-2 hover:scale-110 ease-in-out duration-300 transition-all"
-                onClick={() => router.push(`/partners/${el._id}`)}
-              >
-                Edit
-              </button>
-            </div>
-          ))}
+                <button
+                  className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6  hover:scale-110 ease-in-out duration-300 transition-all"
+                  onClick={() => handleDelete(el._id)}
+                >
+                  Delete
+                </button>
+                <button
+                  className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6 my-2 hover:scale-110 ease-in-out duration-300 transition-all"
+                  onClick={() => router.push(`/partners/${el._id}`)}
+                >
+                  Edit
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

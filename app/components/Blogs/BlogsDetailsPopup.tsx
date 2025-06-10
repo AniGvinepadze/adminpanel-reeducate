@@ -87,7 +87,7 @@ export default function BlogsDetailsPopup({
           type="submit"
           className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
         >
-          Add Course
+          Add Blog
         </button>
       </div>
     </form>

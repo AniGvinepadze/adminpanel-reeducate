@@ -74,7 +74,7 @@ export default function PartnerDetailsSection({
               <div className="max-w-[900px] w-full">
                 <div className="max-w-[900px] w-full p-3 max-[600px]:p-0 mt-6 ">
                   <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
-                    <p className="p-2 font-medium text-sm">blogs description</p>
+                    <p className="p-2 font-medium text-sm">Partner description</p>
                     <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
                       {el.partnerDescription}
                     </p>

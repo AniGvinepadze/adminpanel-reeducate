@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { Partners } from "../page";
+import PartnerDetailEditPage from "@/app/components/Partners/PartnerDetailEditPage";
 
 export default function EditPartnerPage() {
   const router = useRouter();
@@ -16,13 +17,13 @@ export default function EditPartnerPage() {
   const [partner, setPartner] = useState<Partners | null>(null);
   const [formData, setFormData] = useState({
     img: "",
-    description:"",
+    description: "",
     imageFile: null as File | null,
   });
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
   const token = getCookie("accessToken") as string;
-  
+
   const handleMainOnClick = () => {
     setMainActive(true);
     setDetailsActive(false);
@@ -57,7 +58,7 @@ export default function EditPartnerPage() {
         setFormData({
           img: partnerData.images?.[0] || "",
           imageFile: null,
-          description: response.data.description
+          description: response.data.description,
         });
       } catch (error) {
         console.error("Failed to load course", error);
@@ -90,7 +91,7 @@ export default function EditPartnerPage() {
     e.preventDefault();
 
     const formDataToSend = new FormData();
-   formDataToSend.append("description", formData.description);
+    formDataToSend.append("description", formData.description);
     if (formData.imageFile) {
       formDataToSend.append("img", formData.imageFile);
     }
@@ -112,9 +113,39 @@ export default function EditPartnerPage() {
 
   return (
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
+        <div className="flex justify-between">
       <h1 className="text-2xl font-bold mb-4">Edit Partner</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-            {["description"].map((field) => (
+       <div className="flex gap-5">
+          <button
+            className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+              mainActive ? "bg-MainBg" : ""
+            }`}
+            onClick={handleMainOnClick}
+          >
+            მთავარი
+          </button>
+          <button
+            className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+              detailsActive ? "bg-MainBg" : ""
+            }`}
+            onClick={handleDetailOnClick}
+          >
+            დეტალები
+          </button>
+        </div>
+        <div></div>
+        </div>
+      {detailsActive ? (
+        <PartnerDetailEditPage
+          id={id}
+          getCurrentUser={getCurrentUser}
+          token={token}
+          previewImageUrl={previewImageUrl}
+          setPreviewImageUrl={setPreviewImageUrl}
+        />
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {["description"].map((field) => (
             <div key={field}>
               <label
                 htmlFor={field}
@@ -157,14 +188,14 @@ export default function EditPartnerPage() {
             )}
           </div>
 
-
-        <button
-          type="submit"
-          className="mt-6 px-4 py-2 w-full my-2 bg-MainBg text-base font-medium text-white rounded-lg hover:bg-[#0f0f0f] hover:scale-105 transition-all ease-in-out duration-300"
-        >
-          Save Changes
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="mt-6 px-4 py-2 w-full my-2 bg-MainBg text-base font-medium text-white rounded-lg hover:bg-[#0f0f0f] hover:scale-105 transition-all ease-in-out duration-300"
+          >
+            Save Changes
+          </button>
+        </form>
+      )}
     </div>
   );
 }

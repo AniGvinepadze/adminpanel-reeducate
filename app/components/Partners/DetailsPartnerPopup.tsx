@@ -8,7 +8,7 @@ type PartnerDetailPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   partner: Partners[];
-  setPartners: React.Dispatch<React.SetStateAction<Partners[]>>;
+  setPartner: React.Dispatch<React.SetStateAction<Partners[]>>;
   selectedFile: File | null;
   token: string;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,7 +19,7 @@ export default function DetailsPartnerPopup({
   handleChange,
   selectedFile,
   partner,
-  setPartners,
+  setPartner,
   token,
   setIsAddModalOpen,
   handleFileChange,

@@ -29,6 +29,21 @@ export default function MainPartnerPopup({
             placeholder="Upload image"
             className="mt-1 block w-full border  text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black  sm:text-sm p-2"
           />
+            <label
+            htmlFor="description"
+            className="block text-sm font-medium mt-4"
+          >
+            Description
+          </label>
+          <input
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            type="text"
+            placeholder="Enter course name"
+            className="mt-1 block w-full border text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black sm:text-sm p-2"
+          />
         </div>
 
         <div className="flex justify-end gap-4 mt-6">

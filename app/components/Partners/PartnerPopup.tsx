@@ -5,25 +5,32 @@ import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import MainPartnerPopup from "./MainPartnerPopup";
+import DetailsPartnerPopup from "./DetailsPartnerPopup";
 
 type PartnerPopupProps = {
   setIsAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isAddModalOpen: boolean;
   partner: Partners[];
   setPartner: React.Dispatch<React.SetStateAction<Partners[]>>;
+  handleAddCourse: (newPartner:Partners ) => void
 };
 
 export default function PartnerPopup({
   setIsAddModalOpen,
   isAddModalOpen,
   partner,
+    handleAddCourse,
   setPartner,
 }: PartnerPopupProps) {
   const [user, setUser] = useState();
   const [formData, setFormData] = useState({
     images: [],
+    description: "",
   });
 
+  const [mainActive, setMainActive] = useState(true);
+  const [detailsActive, setDetailsActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -79,6 +86,14 @@ export default function PartnerPopup({
     }));
   };
 
+  const handleMainOnClick = () => {
+    setMainActive(true);
+    setDetailsActive(false);
+  };
+  const handleDetailOnClick = () => {
+    setMainActive(false);
+    setDetailsActive(true);
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -105,7 +120,28 @@ export default function PartnerPopup({
         className="bg-[#535353] shadow-xl  rounded-lg  max-w-[560px] w-full p-6"
       >
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-bold">Add New Partner</h2>
+          <div></div>
+
+          <div className="flex gap-5 justify-center">
+            <button
+              className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+                mainActive ? "bg-MainBg" : ""
+              }
+          `}
+              onClick={handleMainOnClick}
+            >
+              მთავარი
+            </button>
+            <button
+              className={`bg-tranparent border-2 border-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[400px]:py-1 ${
+                detailsActive ? "bg-MainBg" : ""
+              }
+          `}
+              onClick={handleDetailOnClick}
+            >
+              დეტალები
+            </button>
+          </div>
           <button
             onClick={() => setIsAddModalOpen(false)}
             className="hover:text-gray-700 rotate-45 text-4xl  transition-all ease-in-out duration-300"
@@ -114,31 +150,26 @@ export default function PartnerPopup({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="images" className="block text-sm font-medium">
-              Upload Image
-            </label>
-            <input
-              id="images"
-              name="images"
-              onChange={handleFileChange}
-              type="file"
-              accept="image/*"
-              placeholder="Upload image"
-              className="mt-1 block w-full border  text-gray-700 border-gray-300 rounded-md shadow-sm focus:ring-black  sm:text-sm p-2"
-            />
-          </div>
-
-          <div className="flex justify-end gap-4 mt-6">
-            <button
-              type="submit"
-              className="w-full bg-MainBg text-white py-2 px-4 rounded-md hover:bg-DarkGrey transition-all ease-in-out duration-300"
-            >
-              Add Partner
-            </button>
-          </div>
-        </form>
+        {mainActive ? (
+          <MainPartnerPopup
+            formData={formData}
+            handleChange={handleChange}
+            handleFileChange={handleFileChange}
+            handleSubmit={handleSubmit}
+          />
+        ) : (
+          <DetailsPartnerPopup
+            formData={formData}
+            handleChange={handleChange}
+            selectedFile={selectedFile}
+            token={token}
+            partner={partner}
+            setPartner={setPartner}
+            setIsAddModalOpen={setIsAddModalOpen}
+            handleFileChange={handleFileChange}
+            handleAddCourse={handleAddCourse}
+          />
+        )}
       </div>
     </div>
   );

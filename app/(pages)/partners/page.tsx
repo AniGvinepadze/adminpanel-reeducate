@@ -1,7 +1,7 @@
 "use client";
 
 import AboutUsPopup from "@/app/common/popups/AboutUsPopup";
-import PartnerPopup from "@/app/common/popups/PartnerPopup";
+import PartnerPopup from "@/app/components/Partners/PartnerPopup";
 import PartnersDetailsSection from "@/app/components/Partners/PartnersDetailsSection";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
@@ -62,6 +62,9 @@ export default function page() {
     fetchAboutUs();
   }, [token, router]);
 
+    const handleAddCourse = (newPartner: Partners) => {
+      setPartner((prevPartner) => [...prevPartner, newPartner]);
+    };
   const handleDelete = async (id: string) => {
     try {
       await axiosInstance.delete(`/partners/${id}`, {
@@ -132,6 +135,7 @@ export default function page() {
             isAddModalOpen={isAddModalOpen}
             partner={partner}
             setPartner={setPartner}
+              handleAddCourse={handleAddCourse}
           />
         </div>
       )}

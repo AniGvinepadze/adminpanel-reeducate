@@ -10,16 +10,28 @@ export default function EditPartnerPage() {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
-
+  const [mainActive, setMainActive] = useState(true);
+  const [detailsActive, setDetailsActive] = useState(false);
   const [user, setUser] = useState();
   const [partner, setPartner] = useState<Partners | null>(null);
   const [formData, setFormData] = useState({
     img: "",
+    description:"",
     imageFile: null as File | null,
   });
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
   const token = getCookie("accessToken") as string;
+  
+  const handleMainOnClick = () => {
+    setMainActive(true);
+    setDetailsActive(false);
+  };
+
+  const handleDetailOnClick = () => {
+    setMainActive(false);
+    setDetailsActive(true);
+  };
 
   const getCurrentUser = async (token: string) => {
     try {
@@ -45,6 +57,7 @@ export default function EditPartnerPage() {
         setFormData({
           img: partnerData.images?.[0] || "",
           imageFile: null,
+          description: response.data.description
         });
       } catch (error) {
         console.error("Failed to load course", error);
@@ -77,7 +90,7 @@ export default function EditPartnerPage() {
     e.preventDefault();
 
     const formDataToSend = new FormData();
- 
+   formDataToSend.append("description", formData.description);
     if (formData.imageFile) {
       formDataToSend.append("img", formData.imageFile);
     }
@@ -101,32 +114,49 @@ export default function EditPartnerPage() {
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
       <h1 className="text-2xl font-bold mb-4">Edit Partner</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-     
-        <div>
-          <label
-            htmlFor="image"
-            className="block mb-1 font-medium capitalize p-1"
-          >
-            Image
-          </label>
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="w-full"
-          />
-          {previewImageUrl && (
-            <div className="mt-2">
-              <img
-                src={previewImageUrl}
-                alt="Preview"
-                className="max-w-xs max-h-40 object-contain rounded"
+            {["description"].map((field) => (
+            <div key={field}>
+              <label
+                htmlFor={field}
+                className="block mb-1 font-medium capitalize p-1"
+              >
+                {field}
+              </label>
+              <input
+                id={field}
+                name={field}
+                value={(formData as any)[field]}
+                onChange={handleChange}
+                className="w-full border text-gray-700 border-gray-300 rounded-xl px-3 py-2"
               />
-              <p className="text-sm break-all">{previewImageUrl}</p>
             </div>
-          )}
-        </div>
+          ))}
+          <div>
+            <label
+              htmlFor="image"
+              className="block mb-1 font-medium capitalize p-1"
+            >
+              Image
+            </label>
+            <input
+              type="file"
+              id="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full"
+            />
+            {previewImageUrl && (
+              <div className="mt-2">
+                <img
+                  src={previewImageUrl}
+                  alt="Preview"
+                  className="max-w-xs max-h-40 object-contain rounded"
+                />
+                <p className="text-sm break-all">{previewImageUrl}</p>
+              </div>
+            )}
+          </div>
+
 
         <button
           type="submit"

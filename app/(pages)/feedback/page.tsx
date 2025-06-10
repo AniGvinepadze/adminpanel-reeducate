@@ -17,13 +17,14 @@ export type Feedback = {
 };
 export default function page() {
   const [feedback, setFeedback] = useState<Feedback[]>([]);
+  const [user, setUser] = useState();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const token = getCookie("accessToken") as string;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get("/feedbak", {
+        const response = await axiosInstance.get("/feedback", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -33,6 +34,22 @@ export default function page() {
         console.log("error fertchong courses");
       }
     };
+    const getCurrentUser = async () => {
+      try {
+        const response = await axiosInstance.get("/auth/current-admin", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("Current user:", response.data);
+        setUser(response.data);
+      } catch (err: any) {
+        console.error(
+          "Failed to get current admin:",
+          err.response || err.message || err
+        );
+        router.push("/sign-in");
+      }
+    };
+    getCurrentUser();
     fetchData();
   }, []);
   const handleDelete = async (id: string) => {
@@ -113,7 +130,7 @@ export default function page() {
           </button>
           <button
             className=" bg-MainBg rounded-xl flex justify-center gap-4 py-3 px-6 my-1 hover:scale-105 ease-in-out duration-300 transition-all"
-            onClick={() => router.push(`/why-us/${el._id}`)}
+            onClick={() => router.push(`/feedback/${el._id}`)}
           >
             Edit
           </button>

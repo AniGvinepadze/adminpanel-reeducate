@@ -4,31 +4,33 @@ import React, { useEffect, useState } from "react";
 
 import { axiosInstance } from "@/app/lib/axiosIntance";
 import { getCookie } from "cookies-next";
-import { FAQ } from "../page";
+import { Feedback } from "../page";
 
 export default function page() {
   const router = useRouter();
   const pathname = usePathname();
   const id = pathname.split("/").pop() || "";
 
-  const [faq, setFaq] = useState<FAQ | null>(null);
+  const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [formData, setFormData] = useState({
-    answer: "",
-    question: "",
+    description: "",
+    category: "",
+    author:""
 
   });
   const token = getCookie("accessToken") as string;
 
   useEffect(() => {
-    async function fetchFaq() {
+    async function fetchFeedback() {
       try {
-        const response = await axiosInstance.get(`/faq/${id}`, {
+        const response = await axiosInstance.get(`/feedback/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setFaq(response.data);
+        setFeedback(response.data);
         setFormData({
-          answer: response.data.answer,
-          question: response.data.question,
+          author: response.data.author,
+          category: response.data.category,
+          description:response.data.description
 
         });
       } catch (error) {
@@ -36,7 +38,7 @@ export default function page() {
       }
     }
 
-    fetchFaq();
+    fetchFeedback();
   }, [id, token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,10 +50,10 @@ export default function page() {
     e.preventDefault();
 
     try {
-      await axiosInstance.patch(`/faq/${id}`, formData, {
+      await axiosInstance.patch(`/feedback/${id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      router.push("/faq");
+      router.push("/feedback");
     } catch (error) {
       console.error("Failed to update course", error);
     }
@@ -61,7 +63,7 @@ export default function page() {
     <div className="bg-DarkGrey min-h-[600px] w-full rounded-lg shadow-xl p-7 max-[700px]:p-4">
       <h1 className="text-2xl font-bold mb-4">Edit FAQ</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {["question","answer"].map((field) => (
+        {["description","author","category"].map((field) => (
           <div key={field}>
             <label
               htmlFor={field}

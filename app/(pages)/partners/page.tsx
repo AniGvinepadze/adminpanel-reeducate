@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 export type Partners = {
   _id: string;
   images: string[];
+  description: string;
 };
 
 export default function page() {
@@ -76,7 +77,9 @@ export default function page() {
     <div className=" bg-DarkGrey min-h-[600px] max-w-[1000px] w-full rounded-xl shadow-lg p-7  max-[500px]:p-3">
       <div className="w-full max-w-[1000px] flex justify-between p-3 relative">
         <div>
-          <h1 className="text-2xl font-bold mb-4 max-[400px]:text-xl">პარტნიორები</h1>
+          <h1 className="text-2xl font-bold mb-4 max-[400px]:text-xl">
+            პარტნიორები
+          </h1>
         </div>
         <button
           className="bg-MainBg rounded-xl flex justify-between gap-4 py-3 px-6 hover:scale-110 ease-in-out duration-300 transition-all text-base font-medium max-[500px]:py-1 max-[400px]:px-4
@@ -88,7 +91,7 @@ export default function page() {
         </button>
       </div>
       {isAddModalOpen && (
-             <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-1100:translate-x-[-40%] max-[800px]:translate-x-[-50%] max-[700px]:w-[400px] max-700:translate-x-[-50%]  max-[450px]:max-w-[300px]">
+        <div className="max-w-[600px] w-full  absolute left-1/2 translate-x-[-20%] max-1100:translate-x-[-40%] max-[800px]:translate-x-[-50%] max-[700px]:w-[400px] max-700:translate-x-[-50%]  max-[450px]:max-w-[300px]">
           <PartnerPopup
             setIsAddModalOpen={setIsAddModalOpen}
             isAddModalOpen={isAddModalOpen}
@@ -101,7 +104,7 @@ export default function page() {
         <div className="grid grid-cols-3 gap-3 max-[1050px]:grid-cols-2 max-[450px]:grid-cols-1 ">
           {partner.map((el) => (
             <div key={el._id} className="flex flex-col gap-1 max-w-[275px] ">
-              <div className=" bg-MainBg rounded-xl flex justify-between gap-4 p-3 my-3">
+              <div className=" bg-MainBg rounded-xl flex flex-col  justify-between gap-4 p-3 my-3">
                 {el.images && el.images.length > 0 ? (
                   <div className="h-full max-w-[450px] w-full rounded">
                     <Image
@@ -115,6 +118,14 @@ export default function page() {
                 ) : (
                   <p>No image</p>
                 )}
+                <div className="max-w-[900px] w-full py-3 px-3 max-[950px]:px-0">
+                  <div className="w-full max-w-[800px] mb-3 ">
+                    <p className="p-2 font-medium text-sm">Description</p>
+                    <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                      {el.description}
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <button

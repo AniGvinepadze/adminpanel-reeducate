@@ -43,6 +43,7 @@ const DetailPopup = ({
       data.append("courseDestription", formData.courseDestription);
       data.append("courseLittleGoals", formData.courseLittleGoals);
       data.append("courseSyllabus", formData.courseSyllabus);
+      data.append("courseDetailedSyllabus", formData.courseDetailedSyllabus);
 
       if (selectedFile) {
         data.append("img", selectedFile);
@@ -55,8 +56,7 @@ const DetailPopup = ({
       });
 
       // setCourses((prevCourses) => [...prevCourses, response.data]);
-        handleAddCourse(response.data);
-
+      handleAddCourse(response.data);
 
       setIsAddModalOpen(false);
     } catch (error) {
@@ -185,6 +185,20 @@ const DetailPopup = ({
           id="courseSyllabus"
           name="courseSyllabus"
           value={formData.courseSyllabus}
+          onChange={handleChange}
+          type="text"
+          placeholder="e.g. UI/UX"
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-black text-gray-700 sm:text-sm p-2"
+        />
+      </div>
+<div>
+        <label htmlFor="courseDetailedSyllabus" className="block text-sm font-medium">
+          Course Detailed Syllabus
+        </label>
+        <input
+          id="courseDetailedSyllabus"
+          name="courseDetailedSyllabus"
+          value={formData.courseDetailedSyllabus}
           onChange={handleChange}
           type="text"
           placeholder="e.g. UI/UX"

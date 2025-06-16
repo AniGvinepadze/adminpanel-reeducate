@@ -28,6 +28,7 @@ export default function DetailsEditSecction({
     courseDescription: "",
     courseLittleGoals: "",
     courseSyllabus: "",
+    courseDetailedSyllabus:"",
     img: "",
     imageFile: null as File | null,
   });
@@ -51,6 +52,7 @@ export default function DetailsEditSecction({
           courseLittleGoals: detailscoursedata.courseLittleGoals,
           coursePrice: detailscoursedata.coursePrice,
           courseSyllabus: detailscoursedata.courseSyllabus,
+          courseDetailedSyllabus:detailscoursedata.courseDetailedSyllabus,
           img: detailscoursedata.images?.[0] || "",
           imageFile: null,
         });
@@ -104,6 +106,7 @@ export default function DetailsEditSecction({
       "courseSyllabus",
       detailsFormData.courseSyllabus
     );
+    detailsFormDataToSend.append("courseDetailedSyllabus",detailsFormData.courseDetailedSyllabus)
     if (detailsFormData.imageFile) {
       detailsFormDataToSend.append("img", detailsFormData.imageFile);
       console.log("Submitting form with data: ", detailsFormDataToSend);

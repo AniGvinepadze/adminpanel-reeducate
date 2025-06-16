@@ -3,6 +3,8 @@ import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Tiptap from "../Tiptap/TiptapComponent";
+import TiptapComponent from "../Tiptap/TiptapComponent";
 
 export type CoursesDetail = {
   _id: string;
@@ -15,6 +17,7 @@ export type CoursesDetail = {
   courseSyllabus: string;
   courseGoal: string;
   courseLittleGoals: string;
+  courseDetailedSyllabus:string
 };
 
 interface CoursesDetailsSectionProps {
@@ -42,9 +45,9 @@ export default function CoursesDetailsSection({
   };
   useEffect(() => {
     fetchData();
-  }, [token]); 
-   const handleCourseDelete = async (id: string) => {
-    await handleDelete(id); 
+  }, [token]);
+  const handleCourseDelete = async (id: string) => {
+    await handleDelete(id);
     fetchData();
   };
 
@@ -56,7 +59,8 @@ export default function CoursesDetailsSection({
       course.coursePrice ||
       course.courseSyllabus ||
       course.courseGoal ||
-      course.courseLittleGoals
+      course.courseLittleGoals ||
+      course.courseDetailedSyllabus
     );
   };
   const router = useRouter();
@@ -136,7 +140,17 @@ export default function CoursesDetailsSection({
                   <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
                     <p className="p-2 font-medium text-sm">Syllabus</p>
                     <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                      {/* <TiptapComponent /> */}
                       {el.courseSyllabus}
+                    </p>
+                  </div>
+                </div>
+                <div className="max-w-[900px] w-full p-3 max-[600px]:p-0 ">
+                  <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
+                    <p className="p-2 font-medium text-sm">Course Detailed Syllabus</p>
+                    <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
+                      <TiptapComponent />
+                      {el.courseDetailedSyllabus}
                     </p>
                   </div>
                 </div>

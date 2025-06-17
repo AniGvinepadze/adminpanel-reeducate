@@ -3,15 +3,42 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import { FaBold, FaItalic, FaUnderline, FaListOl, FaListUl, FaHeading } from "react-icons/fa";
+import TextAlign from "@tiptap/extension-text-align";
+import {
+  FaBold,
+  FaItalic,
+  FaUnderline,
+  FaListOl,
+  FaListUl,
+  FaHeading,
+} from "react-icons/fa";
 import { useState } from "react";
+import { getCookie } from "cookies-next";
+import { axiosInstance } from "@/app/lib/axiosIntance";
 
-const TiptapComponent = () => {
-  const [headingLevel, setHeadingLevel] = useState(1);
+// Define the type for heading levels explicitly
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+const TiptapComponent = ({
+  initialComponent,
+  onSave,
+  courseId,
+}: {
+  initialComponent: string;
+  onSave: (content: string) => void;
+  courseId: string;
+}) => {
+  const [headingLevel, setHeadingLevel] = useState<HeadingLevel>(1);
 
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
-    content: "<p>Hello World!</p>",
+    extensions: [
+      StarterKit,
+      Underline,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+    ],
+    content: initialComponent,
     editorProps: {
       attributes: {
         class:
@@ -25,9 +52,25 @@ const TiptapComponent = () => {
     return null;
   }
 
-  const saveContent = () => {
+  const saveContent = async () => {
     if (editor) {
-      console.log(editor.getJSON());
+      const updatedContent = editor.getHTML(); // Get the HTML content with all styles applied
+      try {
+        const token = getCookie("accessToken") as string;
+        await axiosInstance.patch(
+          `/courses/${courseId}`,
+          { courseDetailedSyllabus: updatedContent },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("Content saved successfully!");
+        onSave(updatedContent);
+      } catch (error) {
+        console.error("Error saving content:", error);
+      }
     }
   };
 
@@ -38,15 +81,24 @@ const TiptapComponent = () => {
           <h2>Editor</h2>
           <div className="flex space-x-2 mb-2">
             <div className="relative">
-              <button className={`p-2`}>
+              <button
+                className={`p-2`}
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .toggleHeading({ level: headingLevel })
+                    .run()
+                }
+              >
                 <FaHeading />
               </button>
               <select
                 value={headingLevel}
                 onChange={(e) => {
-                  const level = Number(e.target.value);
+                  const level = Number(e.target.value) as HeadingLevel;
                   setHeadingLevel(level);
-                  editor.chain().focus().toggleHeading({ level: level as 1 | 2 | 3 | 4 | 5 | 6 }).run();
+                  editor.chain().focus().toggleHeading({ level }).run();
                 }}
                 className="absolute top-0 left-0 opacity-0 w-full h-full cursor-pointer"
               >
@@ -65,28 +117,102 @@ const TiptapComponent = () => {
             </button>
             <button
               onClick={() => editor.chain().focus().toggleItalic().run()}
-              className={`p-2 ${editor.isActive("italic") ? "bg-gray-300" : ""}`}
+              className={`p-2 ${
+                editor.isActive("italic") ? "bg-gray-300" : ""
+              }`}
             >
               <FaItalic />
             </button>
             <button
               onClick={() => editor.chain().focus().toggleUnderline().run()}
-              className={`p-2 ${editor.isActive("underline") ? "bg-gray-300" : ""}`}
+              className={`p-2 ${
+                editor.isActive("underline") ? "bg-gray-300" : ""
+              }`}
             >
               <FaUnderline />
             </button>
             <button
               onClick={() => editor.chain().focus().toggleBulletList().run()}
-              className={`p-2 ${editor.isActive("bulletList") ? "bg-gray-300" : ""}`}
+              className={`p-2 ${
+                editor.isActive("bulletList") ? "bg-gray-300" : ""
+              }`}
             >
               <FaListUl />
             </button>
             <button
               onClick={() => editor.chain().focus().toggleOrderedList().run()}
-              className={`p-2 ${editor.isActive("orderedList") ? "bg-gray-300" : ""}`}
+              className={`p-2 ${
+                editor.isActive("orderedList") ? "bg-gray-300" : ""
+              }`}
             >
               <FaListOl />
             </button>
+
+            {/* Text Alignment Buttons */}
+            <button
+              onClick={() => editor.chain().focus().setTextAlign("left").run()}
+              className={`p-2 ${
+                editor.isActive("textAlign", "left") ? "bg-gray-300" : ""
+              }`}
+            >
+              Left
+            </button>
+            <button
+              onClick={() =>
+                editor.chain().focus().setTextAlign("center").run()
+              }
+              className={`p-2 ${
+                editor.isActive("textAlign", "center") ? "bg-gray-300" : ""
+              }`}
+            >
+              Center
+            </button>
+            <button
+              onClick={() => editor.chain().focus().setTextAlign("right").run()}
+              className={`p-2 ${
+                editor.isActive("textAlign", "right") ? "bg-gray-300" : ""
+              }`}
+            >
+              Right
+            </button>
+            <button
+              onClick={() =>
+                editor.chain().focus().setTextAlign("justify").run()
+              }
+              className={`p-2 ${
+                editor.isActive("textAlign", "justify") ? "bg-gray-300" : ""
+              }`}
+            >
+              Justify
+            </button>
+
+            {/* Font Color and Highlight Color */}
+            <input
+              type="color"
+              onChange={(e) => {
+                // Apply the color to selected text
+                editor
+                  .chain()
+                  .focus()
+                  .setMark("textStyle", { color: e.target.value })
+                  .run();
+              }}
+              className="p-2"
+              title="Font Color"
+            />
+            <input
+              type="color"
+              onChange={(e) => {
+                // Apply the highlight color to selected text
+                editor
+                  .chain()
+                  .focus()
+                  .setMark("highlight", { backgroundColor: e.target.value })
+                  .run();
+              }}
+              className="p-2"
+              title="Highlight Color"
+            />
           </div>
           <EditorContent editor={editor} className="border rounded-lg p-2" />
           <button

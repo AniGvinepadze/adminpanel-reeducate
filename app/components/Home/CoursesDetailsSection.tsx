@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Tiptap from "../Tiptap/TiptapComponent";
 import TiptapComponent from "../Tiptap/TiptapComponent";
+import { headers } from "next/headers";
 
 export type CoursesDetail = {
   _id: string;
@@ -17,7 +18,7 @@ export type CoursesDetail = {
   courseSyllabus: string;
   courseGoal: string;
   courseLittleGoals: string;
-  courseDetailedSyllabus:string
+  courseDetailedSyllabus: string;
 };
 
 interface CoursesDetailsSectionProps {
@@ -49,6 +50,23 @@ export default function CoursesDetailsSection({
   const handleCourseDelete = async (id: string) => {
     await handleDelete(id);
     fetchData();
+  };
+
+  const handleSaveContent = async (
+    courseId: string,
+    content: string,
+    field: string
+  ) => {
+    try {
+      await axiosInstance.patch(
+        `/courses/${courseId}`,
+        { [field]: content },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchData()
+    } catch (error) {
+            console.log("error saving course content");
+    }
   };
 
   const isValidCourse = (course: CoursesDetail) => {
@@ -140,17 +158,23 @@ export default function CoursesDetailsSection({
                   <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
                     <p className="p-2 font-medium text-sm">Syllabus</p>
                     <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
-                      {/* <TiptapComponent /> */}
+                  
                       {el.courseSyllabus}
                     </p>
                   </div>
                 </div>
                 <div className="max-w-[900px] w-full p-3 max-[600px]:p-0 ">
                   <div className="w-full max-w-[800px] -mt-5 max-[600px]:mt-0">
-                    <p className="p-2 font-medium text-sm">Course Detailed Syllabus</p>
+                    <p className="p-2 font-medium text-sm">
+                      Course Detailed Syllabus
+                    </p>
                     <p className="text-base font-medium w-full bg-DarkGrey max-w-[800px] p-2 rounded-xl">
-                      <TiptapComponent />
-                      {el.courseDetailedSyllabus}
+                      <TiptapComponent 
+                      initialComponent={el.courseDetailedSyllabus}
+                        onSave={(content) => handleSaveContent(el._id, content, "courseDetailedSyllabus")}
+                        courseId={el._id}
+                       />
+                    
                     </p>
                   </div>
                 </div>

@@ -16,7 +16,6 @@ import { useState } from "react";
 import { getCookie } from "cookies-next";
 import { axiosInstance } from "@/app/lib/axiosIntance";
 
-// Define the type for heading levels explicitly
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 const TiptapComponent = ({
@@ -54,7 +53,7 @@ const TiptapComponent = ({
 
   const saveContent = async () => {
     if (editor) {
-      const updatedContent = editor.getHTML(); // Get the HTML content with all styles applied
+      const updatedContent = editor.getHTML();
       try {
         const token = getCookie("accessToken") as string;
         await axiosInstance.patch(
@@ -148,7 +147,6 @@ const TiptapComponent = ({
               <FaListOl />
             </button>
 
-            {/* Text Alignment Buttons */}
             <button
               onClick={() => editor.chain().focus().setTextAlign("left").run()}
               className={`p-2 ${
@@ -186,11 +184,9 @@ const TiptapComponent = ({
               Justify
             </button>
 
-            {/* Font Color and Highlight Color */}
             <input
               type="color"
               onChange={(e) => {
-                // Apply the color to selected text
                 editor
                   .chain()
                   .focus()
@@ -203,7 +199,6 @@ const TiptapComponent = ({
             <input
               type="color"
               onChange={(e) => {
-                // Apply the highlight color to selected text
                 editor
                   .chain()
                   .focus()

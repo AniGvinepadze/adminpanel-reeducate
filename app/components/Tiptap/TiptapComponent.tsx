@@ -32,6 +32,8 @@ const TiptapComponent = ({
   const editor = useEditor({
     extensions: [
       StarterKit,
+
+      
       Underline,
       TextAlign.configure({
         types: ["heading", "paragraph"],
